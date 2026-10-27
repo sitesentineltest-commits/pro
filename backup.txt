@@ -1,0 +1,1376 @@
+1.public class Main {
+    static class Node {
+        int data; Node next;
+        Node(int d) { data = d; }
+    }
+    static Node head = null;
+ 
+    static void insertBegin(int v) {
+        Node n = new Node(v);
+        n.next = head;
+        head = n;
+    }
+    static void insertEnd(int v) {
+        Node n = new Node(v);
+        if (head == null) { head = n; return; }
+        Node t = head;
+        while (t.next != null) t = t.next;
+        t.next = n;
+    }
+    // position starts from 1
+    static void insertPos(int v, int pos) {
+        if (pos == 1) { insertBegin(v); return; }
+        Node t = head;
+        for (int i = 1; i < pos - 1 && t != null; i++) t = t.next;
+        if (t == null) { System.out.println("Invalid position"); return; }
+        Node n = new Node(v);
+        n.next = t.next;
+        t.next = n;
+    }
+    static void display() {
+        Node t = head;
+        while (t != null) { System.out.print(t.data + " -> "); t = t.next; }
+        System.out.println("NULL");
+    }
+    public static void main(String[] args) {
+        insertBegin(10); System.out.print("Insert 10 at beginning : "); display();
+        insertBegin(5);  System.out.print("Insert 5 at beginning  : "); display();
+        insertEnd(30);   System.out.print("Insert 30 at end       : "); display();
+        insertEnd(40);   System.out.print("Insert 40 at end       : "); display();
+        insertPos(20, 3); System.out.print("Insert 20 at position 3: "); display();
+    }
+}
+2.public class Main {
+    static class Node {
+        int data; Node next;
+        Node(int d) { data = d; }
+    }
+    static Node head = null;
+ 
+    static void insertEnd(int v) {
+        Node n = new Node(v);
+        if (head == null) { head = n; return; }
+        Node t = head;
+        while (t.next != null) t = t.next;
+        t.next = n;
+    }
+    static void display() {
+        Node t = head;
+        while (t != null) { System.out.print(t.data + " -> "); t = t.next; }
+        System.out.println("NULL");
+    }
+    static boolean search(int key) {
+        Node t = head; int pos = 1;
+        while (t != null) {
+            if (t.data == key) { System.out.println(key + " found at position " + pos); return true; }
+            t = t.next; pos++;
+        }
+        System.out.println(key + " not found");
+        return false;
+    }
+    static void delete(int key) {
+        if (head == null) { System.out.println("List is empty"); return; }
+        if (head.data == key) { head = head.next; return; }   // delete first node
+        Node t = head;
+        while (t.next != null && t.next.data != key) t = t.next;
+        if (t.next == null) System.out.println(key + " not found, cannot delete");
+        else t.next = t.next.next;                            // bypass the node
+    }
+    public static void main(String[] args) {
+        int[] a = {10, 20, 30, 40, 50};
+        for (int x : a) insertEnd(x);
+        System.out.print("Before deletion: "); display();
+        search(30);
+        search(99);
+        delete(30);
+        System.out.print("After deleting 30: "); display();
+        delete(10);
+        System.out.print("After deleting 10: "); display();
+    }
+}
+3.public class Main {
+    static class Node {
+        int data; Node prev, next;
+        Node(int d) { data = d; }
+    }
+    static Node head = null, tail = null;
+ 
+    static void insertBegin(int v) {
+        Node n = new Node(v);
+        if (head == null) head = tail = n;
+        else { n.next = head; head.prev = n; head = n; }
+    }
+    static void insertEnd(int v) {
+        Node n = new Node(v);
+        if (head == null) head = tail = n;
+        else { tail.next = n; n.prev = tail; tail = n; }
+    }
+    static void insertPos(int v, int pos) {          // pos starts from 1
+        if (pos == 1) { insertBegin(v); return; }
+        Node t = head;
+        for (int i = 1; i < pos - 1 && t != null; i++) t = t.next;
+        if (t == null) { System.out.println("Invalid position"); return; }
+        if (t == tail) { insertEnd(v); return; }
+        Node n = new Node(v);
+        n.next = t.next; n.prev = t;
+        t.next.prev = n; t.next = n;
+    }
+    static void deleteBegin() {
+        if (head == null) return;
+        if (head == tail) head = tail = null;
+        else { head = head.next; head.prev = null; }
+    }
+    static void deleteEnd() {
+        if (head == null) return;
+        if (head == tail) head = tail = null;
+        else { tail = tail.prev; tail.next = null; }
+    }
+    static void deletePos(int pos) {                 // pos starts from 1
+        if (pos == 1) { deleteBegin(); return; }
+        Node t = head;
+        for (int i = 1; i < pos && t != null; i++) t = t.next;
+        if (t == null) { System.out.println("Invalid position"); return; }
+        if (t == tail) { deleteEnd(); return; }
+        t.prev.next = t.next;
+        t.next.prev = t.prev;
+    }
+    static void forward() {
+        System.out.print("Forward : ");
+        for (Node t = head; t != null; t = t.next) System.out.print(t.data + " <-> ");
+        System.out.println("NULL");
+    }
+    static void backward() {
+        System.out.print("Backward: ");
+        for (Node t = tail; t != null; t = t.prev) System.out.print(t.data + " <-> ");
+        System.out.println("NULL");
+    }
+    public static void main(String[] args) {
+        insertBegin(20); insertBegin(10);
+        insertEnd(40);   insertEnd(50);
+        insertPos(30, 3);
+        System.out.println("After insertions:");
+        forward(); backward();
+        deleteBegin();
+        System.out.println("After deleting first node:");
+        forward();
+        deleteEnd();
+        System.out.println("After deleting last node:");
+        forward();
+        deletePos(2);
+        System.out.println("After deleting position 2:");
+        forward(); backward();
+    }
+}
+4.public class Main {
+    static class Node {
+        int data; Node next;
+        Node(int d) { data = d; }
+    }
+    static Node last = null;   // we keep a pointer to the LAST node; last.next is the first node
+ 
+    static void insertBegin(int v) {
+        Node n = new Node(v);
+        if (last == null) { last = n; n.next = n; }
+        else { n.next = last.next; last.next = n; }
+    }
+    static void insertEnd(int v) {
+        insertBegin(v);
+        last = last.next;          // new node becomes last
+    }
+    static void insertPos(int v, int pos) {            // pos starts from 1
+        if (pos == 1 || last == null) { insertBegin(v); return; }
+        Node t = last.next;
+        for (int i = 1; i < pos - 1 && t != last; i++) t = t.next;
+        Node n = new Node(v);
+        n.next = t.next; t.next = n;
+        if (t == last) last = n;
+    }
+    static void deleteBegin() {
+        if (last == null) return;
+        if (last.next == last) last = null;
+        else last.next = last.next.next;
+    }
+    static void deleteEnd() {
+        if (last == null) return;
+        if (last.next == last) { last = null; return; }
+        Node t = last.next;
+        while (t.next != last) t = t.next;
+        t.next = last.next;
+        last = t;
+    }
+    static void deletePos(int pos) {                   // pos starts from 1
+        if (last == null) return;
+        if (pos == 1) { deleteBegin(); return; }
+        Node t = last.next;
+        for (int i = 1; i < pos - 1 && t.next != last.next; i++) t = t.next;
+        if (t.next == last.next) { System.out.println("Invalid position"); return; }
+        if (t.next == last) last = t;
+        t.next = t.next.next;
+    }
+    static void display() {
+        if (last == null) { System.out.println("List is empty"); return; }
+        Node t = last.next;
+        do { System.out.print(t.data + " -> "); t = t.next; } while (t != last.next);   // exactly one traversal
+        System.out.println("(back to head)");
+    }
+    public static void main(String[] args) {
+        insertEnd(10); insertEnd(20); insertEnd(30);
+        insertBegin(5);
+        insertPos(15, 3);
+        System.out.print("After insertions       : "); display();
+        deleteBegin();
+        System.out.print("After deleting first   : "); display();
+        deleteEnd();
+        System.out.print("After deleting last    : "); display();
+        deletePos(2);
+        System.out.print("After deleting pos 2   : "); display();
+    }
+}
+5.public class Main {
+    static class Node {
+        int data; Node next;
+        Node(int d) { data = d; }
+    }
+    static Node head = null;
+ 
+    static void insertEnd(int v) {
+        Node n = new Node(v);
+        if (head == null) { head = n; return; }
+        Node t = head;
+        while (t.next != null) t = t.next;
+        t.next = n;
+    }
+    static void display() {
+        for (Node t = head; t != null; t = t.next) System.out.print(t.data + " -> ");
+        System.out.println("NULL");
+    }
+    static void reverse() {
+        Node prev = null, curr = head, next;
+        while (curr != null) {
+            next = curr.next;     // 1. save next node
+            curr.next = prev;     // 2. reverse the link
+            prev = curr;          // 3. move prev forward
+            curr = next;          // 4. move curr forward
+        }
+        head = prev;              // prev is the new head
+    }
+    public static void main(String[] args) {
+        for (int x : new int[]{10, 20, 30, 40, 50}) insertEnd(x);
+        System.out.print("Original list: "); display();
+        reverse();
+        System.out.print("Reversed list: "); display();
+    }
+}
+6.public class Main {
+    static class Node {
+        int data; Node next;
+        Node(int d) { data = d; }
+    }
+    static boolean hasCycle(Node head) {
+        Node slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;            // moves 1 step
+            fast = fast.next.next;       // moves 2 steps
+            if (slow == fast) return true;   // they meet -> cycle
+        }
+        return false;                    // fast reached the end -> no cycle
+    }
+    public static void main(String[] args) {
+        // List 1 : 1 -> 2 -> 3 -> 4 -> 5 -> NULL  (no cycle)
+        Node a = new Node(1);
+        a.next = new Node(2); a.next.next = new Node(3);
+        a.next.next.next = new Node(4); a.next.next.next.next = new Node(5);
+        System.out.println("List 1 has cycle? " + (hasCycle(a) ? "Yes, cycle exists" : "No cycle"));
+ 
+        // List 2 : make last node point back to the 3rd node  -> cycle
+        Node last = a.next.next.next.next;
+        last.next = a.next.next;
+        System.out.println("List 2 has cycle? " + (hasCycle(a) ? "Yes, cycle exists" : "No cycle"));
+    }
+}
+7.public class Main {
+    static int[] stack = new int[5];
+    static int top = -1;
+    static int MAX = 5;
+ 
+    static void push(int v) {
+        if (top == MAX - 1) { System.out.println("Stack Overflow! Cannot push " + v); return; }
+        stack[++top] = v;
+        System.out.println(v + " pushed");
+    }
+    static void pop() {
+        if (top == -1) { System.out.println("Stack Underflow! Nothing to pop"); return; }
+        System.out.println(stack[top--] + " popped");
+    }
+    static void peek() {
+        if (top == -1) System.out.println("Stack is empty");
+        else System.out.println("Top element = " + stack[top]);
+    }
+    static void display() {
+        if (top == -1) { System.out.println("Stack is empty"); return; }
+        System.out.print("Stack (top to bottom): ");
+        for (int i = top; i >= 0; i--) System.out.print(stack[i] + " ");
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        pop();                                   // underflow demo
+        for (int i = 10; i <= 60; i += 10) push(i);   // 6th push -> overflow
+        display();
+        peek();
+        pop(); pop();
+        display();
+        peek();
+    }
+}
+8.import java.util.Stack;
+ 
+public class Main {
+    static int prec(char c) {
+        if (c == '^') return 3;
+        if (c == '*' || c == '/') return 2;
+        if (c == '+' || c == '-') return 1;
+        return -1;
+    }
+    static String infixToPostfix(String exp) {
+        StringBuilder out = new StringBuilder();
+        Stack<Character> st = new Stack<>();
+        for (char c : exp.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) out.append(c);          // operand -> output
+            else if (c == '(') st.push(c);
+            else if (c == ')') {
+                while (!st.isEmpty() && st.peek() != '(') out.append(st.pop());
+                st.pop();                                              // remove '('
+            } else {                                                   // operator
+                while (!st.isEmpty() && prec(c) <= prec(st.peek())) {
+                    // '^' is right associative: do not pop an equal '^'
+                    if (c == '^' && st.peek() == '^') break;
+                    out.append(st.pop());
+                }
+                st.push(c);
+            }
+        }
+        while (!st.isEmpty()) out.append(st.pop());
+        return out.toString();
+    }
+    public static void main(String[] args) {
+        String[] tests = {"A+B*C", "(A+B)*C", "A+B*(C^D-E)", "A^B^C", "a+b*c-d/e"};
+        for (String t : tests)
+            System.out.println("Infix: " + t + "   Postfix: " + infixToPostfix(t));
+    }
+}
+9.import java.util.Stack;
+ 
+public class Main {
+    static int evaluate(String exp) {
+        Stack<Integer> st = new Stack<>();
+        for (String tok : exp.split(" ")) {
+            if (Character.isDigit(tok.charAt(0))) st.push(Integer.parseInt(tok));   // operand
+            else {
+                int b = st.pop();       // second operand popped first
+                int a = st.pop();
+                switch (tok.charAt(0)) {
+                    case '+': st.push(a + b); break;
+                    case '-': st.push(a - b); break;
+                    case '*': st.push(a * b); break;
+                    case '/': st.push(a / b); break;
+                }
+            }
+        }
+        return st.pop();
+    }
+    public static void main(String[] args) {
+        String exp = "2 3 1 * + 9 -";          // infix: 2 + 3 * 1 - 9
+        System.out.println("Postfix : " + exp);
+        System.out.println("Result  : " + evaluate(exp));
+        String exp2 = "5 1 2 + 4 * + 3 -";     // infix: 5 + (1+2)*4 - 3
+        System.out.println("Postfix : " + exp2);
+        System.out.println("Result  : " + evaluate(exp2));
+    }
+}
+10.import java.util.Stack;
+ 
+public class Main {
+    static boolean isBalanced(String s) {
+        Stack<Character> st = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') st.push(c);
+            else if (c == ')' || c == '}' || c == ']') {
+                if (st.isEmpty()) return false;
+                char open = st.pop();
+                if ((c == ')' && open != '(') ||
+                    (c == '}' && open != '{') ||
+                    (c == ']' && open != '[')) return false;
+            }
+        }
+        return st.isEmpty();     // leftover opening brackets -> unbalanced
+    }
+    public static void main(String[] args) {
+        String[] tests = {"{[()]}", "{[(])}", "((a+b)*c", "[a+(b*c)]-{d}", "())"};
+        for (String t : tests)
+            System.out.println(t + "  ->  " + (isBalanced(t) ? "Balanced" : "Unbalanced"));
+    }
+}
+11.public class Main {
+    static int SIZE = 5;
+    static int[] q = new int[SIZE];
+    static int front = -1, rear = -1;
+ 
+    static boolean isFull()  { return (rear + 1) % SIZE == front; }
+    static boolean isEmpty() { return front == -1; }
+ 
+    static void enqueue(int v) {
+        if (isFull()) { System.out.println("Queue Overflow! Cannot insert " + v); return; }
+        if (isEmpty()) front = 0;
+        rear = (rear + 1) % SIZE;
+        q[rear] = v;
+        System.out.println(v + " inserted");
+    }
+    static void dequeue() {
+        if (isEmpty()) { System.out.println("Queue Underflow! Nothing to delete"); return; }
+        System.out.println(q[front] + " deleted");
+        if (front == rear) front = rear = -1;       // queue became empty
+        else front = (front + 1) % SIZE;
+    }
+    static void display() {
+        if (isEmpty()) { System.out.println("Queue is empty"); return; }
+        System.out.print("Queue: ");
+        int i = front;
+        while (true) {
+            System.out.print(q[i] + " ");
+            if (i == rear) break;
+            i = (i + 1) % SIZE;
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        dequeue();                                   // underflow demo
+        for (int i = 10; i <= 50; i += 10) enqueue(i);
+        enqueue(60);                                 // overflow demo
+        display();
+        dequeue(); dequeue();
+        display();
+        enqueue(60); enqueue(70);                    // reuses freed space (circular)
+        display();
+    }
+}
+
+12.public class Main {
+    static int SIZE = 5;
+    static int[] q = new int[SIZE];
+    static int front = -1, rear = -1;
+ 
+    static boolean isFull()  { return (rear + 1) % SIZE == front; }
+    static boolean isEmpty() { return front == -1; }
+ 
+    static void enqueue(int v) {
+        if (isFull()) { System.out.println("Queue Overflow! Cannot insert " + v); return; }
+        if (isEmpty()) front = 0;
+        rear = (rear + 1) % SIZE;
+        q[rear] = v;
+        System.out.println(v + " inserted");
+    }
+    static void dequeue() {
+        if (isEmpty()) { System.out.println("Queue Underflow! Nothing to delete"); return; }
+        System.out.println(q[front] + " deleted");
+        if (front == rear) front = rear = -1;       // queue became empty
+        else front = (front + 1) % SIZE;
+    }
+    static void display() {
+        if (isEmpty()) { System.out.println("Queue is empty"); return; }
+        System.out.print("Queue: ");
+        int i = front;
+        while (true) {
+            System.out.print(q[i] + " ");
+            if (i == rear) break;
+            i = (i + 1) % SIZE;
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        dequeue();                                   // underflow demo
+        for (int i = 10; i <= 50; i += 10) enqueue(i);
+        enqueue(60);                                 // overflow demo
+        display();
+        dequeue(); dequeue();
+        display();
+        enqueue(60); enqueue(70);                    // reuses freed space (circular)
+        display();
+    }
+}public class Main {
+    // Lower priority number = higher priority (served first)
+    static class Node {
+        String data; int priority; Node next;
+        Node(String d, int p) { data = d; priority = p; }
+    }
+    static Node head = null;
+ 
+    static void insert(String d, int p) {
+        Node n = new Node(d, p);
+        if (head == null || p < head.priority) { n.next = head; head = n; }
+        else {
+            Node t = head;
+            while (t.next != null && t.next.priority <= p) t = t.next;   // <= keeps FIFO for equal priority
+            n.next = t.next; t.next = n;
+        }
+    }
+    static void delete() {
+        if (head == null) { System.out.println("Queue Underflow"); return; }
+        System.out.println("Deleted: " + head.data + " (priority " + head.priority + ")");
+        head = head.next;
+    }
+    static void display() {
+        System.out.print("Queue: ");
+        for (Node t = head; t != null; t = t.next) System.out.print("[" + t.data + ", P" + t.priority + "] ");
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        insert("Task-A", 3); display();
+        insert("Task-B", 1); display();
+        insert("Task-C", 2); display();
+        insert("Task-D", 1); display();
+        delete(); display();
+        delete(); display();
+    }
+}
+13.import java.util.*;
+ 
+public class Main {
+    static int[] slidingMax(int[] a, int k) {
+        int n = a.length;
+        int[] res = new int[n - k + 1];
+        Deque<Integer> dq = new ArrayDeque<>();      // stores INDEXES, values in decreasing order
+        for (int i = 0; i < n; i++) {
+            if (!dq.isEmpty() && dq.peekFirst() <= i - k) dq.pollFirst();          // out of window
+            while (!dq.isEmpty() && a[dq.peekLast()] < a[i]) dq.pollLast();        // remove smaller
+            dq.offerLast(i);
+            if (i >= k - 1) res[i - k + 1] = a[dq.peekFirst()];                    // front = max
+        }
+        return res;
+    }
+    public static void main(String[] args) {
+        int[] a = {1, 3, -1, -3, 5, 3, 6, 7};
+        int k = 3;
+        System.out.println("Array      : " + Arrays.toString(a));
+        System.out.println("Window size: " + k);
+        System.out.println("Max of each window: " + Arrays.toString(slidingMax(a, k)));
+    }
+}
+14.public class Main {
+    static class Node {
+        int data; Node left, right;
+        Node(int d) { data = d; }
+    }
+    static Node root = null;
+ 
+    static Node insert(Node r, int v) {
+        if (r == null) return new Node(v);
+        if (v < r.data) r.left = insert(r.left, v);
+        else if (v > r.data) r.right = insert(r.right, v);
+        return r;
+    }
+    static boolean search(Node r, int key) {
+        if (r == null) return false;
+        if (key == r.data) return true;
+        return key < r.data ? search(r.left, key) : search(r.right, key);
+    }
+    static void inorder(Node r)   { if (r != null) { inorder(r.left); System.out.print(r.data + " "); inorder(r.right); } }
+    static void preorder(Node r)  { if (r != null) { System.out.print(r.data + " "); preorder(r.left); preorder(r.right); } }
+    static void postorder(Node r) { if (r != null) { postorder(r.left); postorder(r.right); System.out.print(r.data + " "); } }
+ 
+    public static void main(String[] args) {
+        for (int x : new int[]{50, 30, 70, 20, 40, 60, 80}) root = insert(root, x);
+        System.out.print("Inorder   : "); inorder(root);   System.out.println();
+        System.out.print("Preorder  : "); preorder(root);  System.out.println();
+        System.out.print("Postorder : "); postorder(root); System.out.println();
+        System.out.println("Search 60 : " + (search(root, 60) ? "Found" : "Not found"));
+        System.out.println("Search 25 : " + (search(root, 25) ? "Found" : "Not found"));
+    }
+}
+15.public class Main {
+    static class Node {
+        int data; Node left, right;
+        Node(int d) { data = d; }
+    }
+    static Node insert(Node r, int v) {
+        if (r == null) return new Node(v);
+        if (v < r.data) r.left = insert(r.left, v);
+        else if (v > r.data) r.right = insert(r.right, v);
+        return r;
+    }
+    static Node minNode(Node r) {
+        while (r.left != null) r = r.left;
+        return r;
+    }
+    static Node delete(Node r, int key) {
+        if (r == null) return null;
+        if (key < r.data) r.left = delete(r.left, key);
+        else if (key > r.data) r.right = delete(r.right, key);
+        else {
+            if (r.left == null) return r.right;      // case 1 (leaf) & case 2 (one child: right)
+            if (r.right == null) return r.left;      // case 2 (one child: left)
+            Node succ = minNode(r.right);            // case 3: two children -> inorder successor
+            r.data = succ.data;
+            r.right = delete(r.right, succ.data);
+        }
+        return r;
+    }
+    static void inorder(Node r) { if (r != null) { inorder(r.left); System.out.print(r.data + " "); inorder(r.right); } }
+ 
+    public static void main(String[] args) {
+        Node root = null;
+        for (int x : new int[]{50, 30, 70, 20, 40, 60, 80, 65}) root = insert(root, x);
+        System.out.print("Original tree (inorder)        : "); inorder(root); System.out.println();
+        root = delete(root, 20);
+        System.out.print("Delete 20 (leaf node)          : "); inorder(root); System.out.println();
+        root = delete(root, 60);
+        System.out.print("Delete 60 (one child, 65)      : "); inorder(root); System.out.println();
+        root = delete(root, 50);
+        System.out.print("Delete 50 (two children, root) : "); inorder(root); System.out.println();
+        System.out.println("New root = " + root.data);
+    }
+}
+16.public class Main {
+    static class Node {
+        int data, height = 1; Node left, right;
+        Node(int d) { data = d; }
+    }
+    static int h(Node n) { return n == null ? 0 : n.height; }
+    static int balance(Node n) { return n == null ? 0 : h(n.left) - h(n.right); }
+    static void update(Node n) { n.height = 1 + Math.max(h(n.left), h(n.right)); }
+ 
+    static Node rightRotate(Node y) {          // used for LL case
+        Node x = y.left;
+        y.left = x.right;
+        x.right = y;
+        update(y); update(x);
+        return x;
+    }
+    static Node leftRotate(Node x) {           // used for RR case
+        Node y = x.right;
+        x.right = y.left;
+        y.left = x;
+        update(x); update(y);
+        return y;
+    }
+    static Node insert(Node r, int v) {
+        if (r == null) return new Node(v);
+        if (v < r.data) r.left = insert(r.left, v);
+        else if (v > r.data) r.right = insert(r.right, v);
+        else return r;
+        update(r);
+        int b = balance(r);
+        if (b > 1 && v < r.left.data) {                  // LL case
+            System.out.println("  LL imbalance at " + r.data + " -> Right Rotation");
+            return rightRotate(r);
+        }
+        if (b < -1 && v > r.right.data) {                // RR case
+            System.out.println("  RR imbalance at " + r.data + " -> Left Rotation");
+            return leftRotate(r);
+        }
+        return r;
+    }
+    static void preorder(Node r) { if (r != null) { System.out.print(r.data + " "); preorder(r.left); preorder(r.right); } }
+ 
+    public static void main(String[] args) {
+        Node root = null;
+        System.out.println("LL case: insert 30, 20, 10");
+        for (int x : new int[]{30, 20, 10}) root = insert(root, x);
+        System.out.print("  Preorder after rotation: "); preorder(root); System.out.println("  (root = " + root.data + ")");
+ 
+        root = null;
+        System.out.println("RR case: insert 10, 20, 30");
+        for (int x : new int[]{10, 20, 30}) root = insert(root, x);
+        System.out.print("  Preorder after rotation: "); preorder(root); System.out.println("  (root = " + root.data + ")");
+    }
+}
+17.public class Main {
+    static class Node {
+        int data, height = 1; Node left, right;
+        Node(int d) { data = d; }
+    }
+    static int h(Node n) { return n == null ? 0 : n.height; }
+    static int balance(Node n) { return n == null ? 0 : h(n.left) - h(n.right); }
+    static void update(Node n) { n.height = 1 + Math.max(h(n.left), h(n.right)); }
+ 
+    static Node rightRotate(Node y) {
+        Node x = y.left;
+        y.left = x.right; x.right = y;
+        update(y); update(x);
+        return x;
+    }
+    static Node leftRotate(Node x) {
+        Node y = x.right;
+        x.right = y.left; y.left = x;
+        update(x); update(y);
+        return y;
+    }
+    static Node insert(Node r, int v) {
+        if (r == null) return new Node(v);
+        if (v < r.data) r.left = insert(r.left, v);
+        else if (v > r.data) r.right = insert(r.right, v);
+        else return r;
+        update(r);
+        int b = balance(r);
+        if (b > 1 && v < r.left.data)  { System.out.println("  LL at " + r.data); return rightRotate(r); }
+        if (b < -1 && v > r.right.data) { System.out.println("  RR at " + r.data); return leftRotate(r); }
+        if (b > 1 && v > r.left.data) {                  // LR: left rotate child, then right rotate node
+            System.out.println("  LR at " + r.data);
+            r.left = leftRotate(r.left);
+            return rightRotate(r);
+        }
+        if (b < -1 && v < r.right.data) {                // RL: right rotate child, then left rotate node
+            System.out.println("  RL at " + r.data);
+            r.right = rightRotate(r.right);
+            return leftRotate(r);
+        }
+        return r;
+    }
+    static void inorder(Node r) { if (r != null) { inorder(r.left); System.out.print(r.data + " "); inorder(r.right); } }
+    static void preorder(Node r) { if (r != null) { System.out.print(r.data + " "); preorder(r.left); preorder(r.right); } }
+ 
+    public static void main(String[] args) {
+        Node root = null;
+        System.out.println("LR case: insert 30, 10, 20");
+        for (int x : new int[]{30, 10, 20}) root = insert(root, x);
+        System.out.print("  Inorder : "); inorder(root);
+        System.out.print("\n  Preorder: "); preorder(root); System.out.println("  (root = " + root.data + ")");
+ 
+        root = null;
+        System.out.println("RL case: insert 10, 30, 20");
+        for (int x : new int[]{10, 30, 20}) root = insert(root, x);
+        System.out.print("  Inorder : "); inorder(root);
+        System.out.print("\n  Preorder: "); preorder(root); System.out.println("  (root = " + root.data + ")");
+ 
+        root = null;
+        for (int x : new int[]{10, 20, 30, 40, 50, 25}) root = insert(root, x);
+        System.out.print("Mixed insertions, final inorder: "); inorder(root); System.out.println();
+    }
+}
+18.public class Main {
+    static class Node {
+        int data; Node left, right;
+        Node(int d) { data = d; }
+    }
+    static Node lca(Node root, int a, int b) {
+        if (root == null) return null;
+        if (root.data == a || root.data == b) return root;
+        Node l = lca(root.left, a, b);
+        Node r = lca(root.right, a, b);
+        if (l != null && r != null) return root;   // a and b are on different sides
+        return (l != null) ? l : r;
+    }
+    public static void main(String[] args) {
+        Node root = new Node(1);
+        root.left = new Node(2);  root.right = new Node(3);
+        root.left.left = new Node(4);  root.left.right = new Node(5);
+        root.right.left = new Node(6); root.right.right = new Node(7);
+ 
+        int[][] pairs = {{4, 5}, {4, 6}, {6, 7}, {2, 4}};
+        for (int[] p : pairs)
+            System.out.println("LCA of " + p[0] + " and " + p[1] + " = " + lca(root, p[0], p[1]).data);
+    }
+}
+19.import java.util.*;
+ 
+public class Main {
+    static class Node {
+        char ch; int freq; Node left, right;
+        Node(char c, int f) { ch = c; freq = f; }
+        Node(int f, Node l, Node r) { freq = f; left = l; right = r; }
+    }
+    static void printCodes(Node n, String code) {
+        if (n == null) return;
+        if (n.left == null && n.right == null) {            // leaf node
+            System.out.println(n.ch + "  (freq " + n.freq + ")  ->  " + code);
+            return;
+        }
+        printCodes(n.left, code + "0");
+        printCodes(n.right, code + "1");
+    }
+    public static void main(String[] args) {
+        char[] chars = {'a', 'b', 'c', 'd', 'e', 'f'};
+        int[] freq   = {5, 9, 12, 13, 16, 45};
+ 
+        PriorityQueue<Node> pq = new PriorityQueue<>((x, y) -> x.freq - y.freq);   // min-heap
+        for (int i = 0; i < chars.length; i++) pq.add(new Node(chars[i], freq[i]));
+ 
+        while (pq.size() > 1) {
+            Node a = pq.poll();                // two smallest
+            Node b = pq.poll();
+            pq.add(new Node(a.freq + b.freq, a, b));   // merge them
+        }
+        System.out.println("Huffman Codes:");
+        printCodes(pq.peek(), "");
+    }
+}
+20.public class Main {
+    static class TrieNode {
+        TrieNode[] child = new TrieNode[26];
+        boolean isEnd = false;
+    }
+    static TrieNode root = new TrieNode();
+ 
+    static void insert(String w) {
+        TrieNode t = root;
+        for (char c : w.toCharArray()) {
+            int i = c - 'a';
+            if (t.child[i] == null) t.child[i] = new TrieNode();
+            t = t.child[i];
+        }
+        t.isEnd = true;
+    }
+    static TrieNode walk(String s) {                 // follow the path of s
+        TrieNode t = root;
+        for (char c : s.toCharArray()) {
+            t = t.child[c - 'a'];
+            if (t == null) return null;
+        }
+        return t;
+    }
+    static boolean search(String w)       { TrieNode t = walk(w); return t != null && t.isEnd; }
+    static boolean startsWith(String pre) { return walk(pre) != null; }
+ 
+    public static void main(String[] args) {
+        for (String w : new String[]{"apple", "app", "apt", "bat", "ball"}) insert(w);
+        System.out.println("search(app)      : " + search("app"));
+        System.out.println("search(appl)     : " + search("appl"));
+        System.out.println("search(bat)      : " + search("bat"));
+        System.out.println("search(cat)      : " + search("cat"));
+        System.out.println("startsWith(ap)   : " + startsWith("ap"));
+        System.out.println("startsWith(ba)   : " + startsWith("ba"));
+        System.out.println("startsWith(ca)   : " + startsWith("ca"));
+    }
+}
+21.public class Main {
+    static final int T = 2;                       // minimum degree: max keys = 2T-1 = 3
+ 
+    static class Node {
+        int[] keys = new int[2 * T - 1];
+        Node[] child = new Node[2 * T];
+        int n = 0;                                // number of keys
+        boolean leaf;
+        Node(boolean leaf) { this.leaf = leaf; }
+    }
+    static Node root = new Node(true);
+ 
+    static void splitChild(Node p, int i) {       // split full child p.child[i]
+        Node y = p.child[i];
+        Node z = new Node(y.leaf);
+        z.n = T - 1;
+        for (int j = 0; j < T - 1; j++) z.keys[j] = y.keys[j + T];       // right half -> z
+        if (!y.leaf) for (int j = 0; j < T; j++) z.child[j] = y.child[j + T];
+        y.n = T - 1;
+        for (int j = p.n; j >= i + 1; j--) p.child[j + 1] = p.child[j];  // make room in parent
+        p.child[i + 1] = z;
+        for (int j = p.n - 1; j >= i; j--) p.keys[j + 1] = p.keys[j];
+        p.keys[i] = y.keys[T - 1];                                       // middle key goes up
+        p.n++;
+        System.out.println("   >> Node split, middle key " + p.keys[i] + " moved up");
+    }
+    static void insertNonFull(Node x, int k) {
+        int i = x.n - 1;
+        if (x.leaf) {
+            while (i >= 0 && x.keys[i] > k) { x.keys[i + 1] = x.keys[i]; i--; }
+            x.keys[i + 1] = k;
+            x.n++;
+        } else {
+            while (i >= 0 && x.keys[i] > k) i--;
+            i++;
+            if (x.child[i].n == 2 * T - 1) {
+                splitChild(x, i);
+                if (k > x.keys[i]) i++;
+            }
+            insertNonFull(x.child[i], k);
+        }
+    }
+    static void insert(int k) {
+        if (root.n == 2 * T - 1) {                // root full -> tree grows in height
+            Node s = new Node(false);
+            s.child[0] = root;
+            root = s;
+            splitChild(s, 0);
+            insertNonFull(s, k);
+        } else insertNonFull(root, k);
+    }
+    static boolean search(Node x, int k) {
+        int i = 0;
+        while (i < x.n && k > x.keys[i]) i++;
+        if (i < x.n && x.keys[i] == k) return true;
+        return !x.leaf && search(x.child[i], k);
+    }
+    static void print(Node x, int level) {
+        System.out.print("   Level " + level + ": [");
+        for (int i = 0; i < x.n; i++) System.out.print(x.keys[i] + (i < x.n - 1 ? " " : ""));
+        System.out.println("]");
+        if (!x.leaf) for (int i = 0; i <= x.n; i++) print(x.child[i], level + 1);
+    }
+    public static void main(String[] args) {
+        for (int k : new int[]{10, 20, 5, 6, 12, 30, 7, 17}) {
+            System.out.println("Insert " + k);
+            insert(k);
+        }
+        System.out.println("Final B-Tree:");
+        print(root, 0);
+        System.out.println("Search 6  : " + (search(root, 6) ? "Found" : "Not found"));
+        System.out.println("Search 15 : " + (search(root, 15) ? "Found" : "Not found"));
+    }
+}
+22.import java.util.*;
+ 
+public class Main {
+    static final int MAX = 3;                    // order 4 -> max 3 keys per node
+ 
+    static class Node {
+        boolean leaf;
+        List<Integer> keys = new ArrayList<>();
+        List<Node> children = new ArrayList<>();
+        Node next;                               // link to next leaf (only used in leaves)
+        Node(boolean leaf) { this.leaf = leaf; }
+    }
+    static class Split {                         // result of a split
+        int key; Node right;
+        Split(int k, Node r) { key = k; right = r; }
+    }
+    static Node root = new Node(true);
+ 
+    static Split insertRec(Node node, int k) {
+        if (node.leaf) {
+            int i = 0;
+            while (i < node.keys.size() && node.keys.get(i) < k) i++;
+            node.keys.add(i, k);
+            if (node.keys.size() <= MAX) return null;
+            int mid = node.keys.size() / 2;                       // split the leaf
+            Node right = new Node(true);
+            right.keys.addAll(node.keys.subList(mid, node.keys.size()));
+            node.keys.subList(mid, node.keys.size()).clear();
+            right.next = node.next;                               // maintain leaf links
+            node.next = right;
+            System.out.println("   >> Leaf split, key " + right.keys.get(0) + " copied up");
+            return new Split(right.keys.get(0), right);
+        }
+        int i = 0;
+        while (i < node.keys.size() && k >= node.keys.get(i)) i++;
+        Split s = insertRec(node.children.get(i), k);
+        if (s == null) return null;
+        node.keys.add(i, s.key);
+        node.children.add(i + 1, s.right);
+        if (node.keys.size() <= MAX) return null;
+        int mid = node.keys.size() / 2;                           // split internal node
+        int up = node.keys.get(mid);
+        Node right = new Node(false);
+        right.keys.addAll(node.keys.subList(mid + 1, node.keys.size()));
+        right.children.addAll(node.children.subList(mid + 1, node.children.size()));
+        node.keys.subList(mid, node.keys.size()).clear();
+        node.children.subList(mid + 1, node.children.size()).clear();
+        System.out.println("   >> Internal split, key " + up + " moved up");
+        return new Split(up, right);
+    }
+    static void insert(int k) {
+        Split s = insertRec(root, k);
+        if (s != null) {                                          // root split -> new root
+            Node nr = new Node(false);
+            nr.keys.add(s.key);
+            nr.children.add(root);
+            nr.children.add(s.right);
+            root = nr;
+        }
+    }
+    static Node findLeaf(int k) {
+        Node n = root;
+        while (!n.leaf) {
+            int i = 0;
+            while (i < n.keys.size() && k >= n.keys.get(i)) i++;
+            n = n.children.get(i);
+        }
+        return n;
+    }
+    static boolean search(int k) { return findLeaf(k).keys.contains(k); }
+ 
+    static void rangeQuery(int lo, int hi) {                      // uses linked leaves
+        System.out.print("Range [" + lo + ", " + hi + "]: ");
+        Node n = findLeaf(lo);
+        while (n != null) {
+            for (int key : n.keys) if (key >= lo && key <= hi) System.out.print(key + " ");
+            if (!n.keys.isEmpty() && n.keys.get(n.keys.size() - 1) > hi) break;
+            n = n.next;
+        }
+        System.out.println();
+    }
+    static void print() {
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        int level = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            System.out.print("   Level " + level++ + ": ");
+            while (size-- > 0) {
+                Node n = q.poll();
+                System.out.print(n.keys + " ");
+                q.addAll(n.children);
+            }
+            System.out.println();
+        }
+    }
+    public static void main(String[] args) {
+        for (int k : new int[]{10, 20, 30, 40, 50, 60, 70, 80}) {
+            System.out.println("Insert " + k);
+            insert(k);
+        }
+        System.out.println("B+ Tree (level by level):");
+        print();
+        System.out.println("Search 40: " + (search(40) ? "Found" : "Not found"));
+        System.out.println("Search 45: " + (search(45) ? "Found" : "Not found"));
+        rangeQuery(25, 65);
+    }
+}
+23.import java.util.*;
+ 
+public class Main {
+    public static void main(String[] args) {
+        int V = 5;
+        int[][] edges = {{0, 1}, {0, 4}, {1, 2}, {1, 3}, {1, 4}, {2, 3}, {3, 4}};   // undirected
+ 
+        // ---- Adjacency Matrix ----
+        int[][] mat = new int[V][V];
+        for (int[] e : edges) { mat[e[0]][e[1]] = 1; mat[e[1]][e[0]] = 1; }
+        System.out.println("Adjacency Matrix:");
+        System.out.print("    ");
+        for (int i = 0; i < V; i++) System.out.print(i + " ");
+        System.out.println();
+        for (int i = 0; i < V; i++) {
+            System.out.print(i + " | ");
+            for (int j = 0; j < V; j++) System.out.print(mat[i][j] + " ");
+            System.out.println();
+        }
+ 
+        // ---- Adjacency List ----
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+        for (int[] e : edges) { adj.get(e[0]).add(e[1]); adj.get(e[1]).add(e[0]); }
+        System.out.println("\nAdjacency List:");
+        for (int i = 0; i < V; i++) System.out.println(i + " -> " + adj.get(i));
+    }
+}
+24.import java.util.*;
+ 
+public class Main {
+    static List<List<Integer>> adj = new ArrayList<>();
+ 
+    static void addEdge(int u, int v) { adj.get(u).add(v); adj.get(v).add(u); }
+ 
+    static void bfs(int start) {
+        boolean[] visited = new boolean[adj.size()];
+        Queue<Integer> q = new LinkedList<>();
+        visited[start] = true;
+        q.add(start);
+        while (!q.isEmpty()) {
+            int u = q.poll();
+            System.out.print(u + " ");
+            for (int v : adj.get(u))
+                if (!visited[v]) { visited[v] = true; q.add(v); }
+        }
+        System.out.println();
+    }
+    static void dfs(int u, boolean[] visited) {
+        visited[u] = true;
+        System.out.print(u + " ");
+        for (int v : adj.get(u))
+            if (!visited[v]) dfs(v, visited);
+    }
+    public static void main(String[] args) {
+        int V = 6;
+        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+        addEdge(0, 1); addEdge(0, 2); addEdge(1, 3);
+        addEdge(1, 4); addEdge(2, 5); addEdge(4, 5);
+ 
+        for (int i = 0; i < V; i++) System.out.println(i + " -> " + adj.get(i));
+        System.out.print("BFS from 0: "); bfs(0);
+        System.out.print("DFS from 0: "); dfs(0, new boolean[V]); System.out.println();
+    }
+}
+25.import java.util.*;
+ 
+public class Main {
+    static class Edge {
+        int to, w;
+        Edge(int t, int w) { to = t; this.w = w; }
+    }
+    static void dijkstra(List<List<Edge>> g, int src) {
+        int V = g.size();
+        int[] dist = new int[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);   // {vertex, distance}
+        pq.add(new int[]{src, 0});
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            int u = cur[0];
+            if (cur[1] > dist[u]) continue;                 // outdated entry
+            for (Edge e : g.get(u)) {
+                if (dist[u] + e.w < dist[e.to]) {           // relaxation
+                    dist[e.to] = dist[u] + e.w;
+                    pq.add(new int[]{e.to, dist[e.to]});
+                }
+            }
+        }
+        System.out.println("Shortest distances from source " + src + ":");
+        for (int i = 0; i < V; i++) System.out.println("  " + src + " -> " + i + " = " + dist[i]);
+    }
+    public static void main(String[] args) {
+        int V = 5;
+        List<List<Edge>> g = new ArrayList<>();
+        for (int i = 0; i < V; i++) g.add(new ArrayList<>());
+        int[][] edges = {{0, 1, 10}, {0, 4, 3}, {1, 2, 2}, {1, 4, 4}, {2, 3, 9}, {3, 2, 7}, {4, 1, 1}, {4, 2, 8}, {4, 3, 2}};
+        for (int[] e : edges) g.get(e[0]).add(new Edge(e[1], e[2]));      // directed graph
+        dijkstra(g, 0);
+    }
+}
+26.public class Main {
+    static void prim(int[][] g) {
+        int V = g.length;
+        int[] parent = new int[V];
+        int[] key = new int[V];
+        boolean[] inMST = new boolean[V];
+        for (int i = 0; i < V; i++) key[i] = Integer.MAX_VALUE;
+        key[0] = 0;                 // start from vertex 0
+        parent[0] = -1;
+ 
+        for (int count = 0; count < V; count++) {
+            int u = -1, min = Integer.MAX_VALUE;
+            for (int i = 0; i < V; i++)                    // pick cheapest vertex not yet in MST
+                if (!inMST[i] && key[i] < min) { min = key[i]; u = i; }
+            inMST[u] = true;
+            for (int v = 0; v < V; v++)                    // update neighbours
+                if (g[u][v] != 0 && !inMST[v] && g[u][v] < key[v]) {
+                    key[v] = g[u][v];
+                    parent[v] = u;
+                }
+        }
+        int total = 0;
+        System.out.println("Edge    Weight");
+        for (int i = 1; i < V; i++) {
+            System.out.println(parent[i] + " - " + i + "     " + g[i][parent[i]]);
+            total += g[i][parent[i]];
+        }
+        System.out.println("Total weight of MST = " + total);
+    }
+    public static void main(String[] args) {
+        int[][] g = {
+            {0, 2, 0, 6, 0},
+            {2, 0, 3, 8, 5},
+            {0, 3, 0, 0, 7},
+            {6, 8, 0, 0, 9},
+            {0, 5, 7, 9, 0}
+        };
+        prim(g);
+    }
+}
+27.import java.util.*;
+ 
+public class Main {
+    static int[] parent;
+ 
+    static int find(int x) {                           // find with path compression
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    static boolean union(int a, int b) {
+        int ra = find(a), rb = find(b);
+        if (ra == rb) return false;                    // same set -> would form a cycle
+        parent[ra] = rb;
+        return true;
+    }
+    public static void main(String[] args) {
+        int V = 5;
+        int[][] edges = {            // {u, v, weight}
+            {0, 1, 2}, {0, 3, 6}, {1, 2, 3}, {1, 3, 8}, {1, 4, 5}, {2, 4, 7}, {3, 4, 9}
+        };
+        Arrays.sort(edges, (a, b) -> a[2] - b[2]);     // sort edges by weight
+ 
+        parent = new int[V];
+        for (int i = 0; i < V; i++) parent[i] = i;
+ 
+        int total = 0;
+        System.out.println("Edges in MST:");
+        for (int[] e : edges) {
+            if (union(e[0], e[1])) {
+                System.out.println("  " + e[0] + " - " + e[1] + "  (weight " + e[2] + ")");
+                total += e[2];
+            }
+        }
+        System.out.println("Total cost of MST = " + total);
+    }
+}
+28.public class Main {
+    static int linearSearch(int[] a, int key) {
+        int steps = 0;
+        for (int i = 0; i < a.length; i++) {
+            steps++;
+            if (a[i] == key) { System.out.println("Linear Search : found at index " + i + " in " + steps + " steps"); return i; }
+        }
+        System.out.println("Linear Search : not found, " + steps + " steps");
+        return -1;
+    }
+    static int binarySearch(int[] a, int key) {        // array must be sorted
+        int low = 0, high = a.length - 1, steps = 0;
+        while (low <= high) {
+            steps++;
+            int mid = (low + high) / 2;
+            if (a[mid] == key) { System.out.println("Binary Search : found at index " + mid + " in " + steps + " steps"); return mid; }
+            else if (a[mid] < key) low = mid + 1;
+            else high = mid - 1;
+        }
+        System.out.println("Binary Search : not found, " + steps + " steps");
+        return -1;
+    }
+    public static void main(String[] args) {
+        int[] a = {5, 12, 18, 23, 34, 45, 56, 67, 78, 89, 91, 99};
+        int key = 78;
+        System.out.println("Searching for " + key + " in a sorted array of " + a.length + " elements");
+        linearSearch(a, key);
+        binarySearch(a, key);
+        System.out.println("\nSearching for 100 (not present)");
+        linearSearch(a, 100);
+        binarySearch(a, 100);
+        System.out.println("\nTime complexity:");
+        System.out.println("Linear Search : Best O(1), Average/Worst O(n)   - works on unsorted data");
+        System.out.println("Binary Search : Best O(1), Average/Worst O(log n) - needs sorted data");
+    }
+}
+29.import java.util.Arrays;
+ 
+public class Main {
+    static long ops;                                    // counts comparisons
+ 
+    static void bubbleSort(int[] a) {
+        int n = a.length;
+        for (int i = 0; i < n - 1; i++) {
+            boolean swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                ops++;
+                if (a[j] > a[j + 1]) { int t = a[j]; a[j] = a[j + 1]; a[j + 1] = t; swapped = true; }
+            }
+            if (!swapped) break;
+        }
+    }
+    static void mergeSort(int[] a, int l, int r) {
+        if (l >= r) return;
+        int m = (l + r) / 2;
+        mergeSort(a, l, m);
+        mergeSort(a, m + 1, r);
+        int[] tmp = new int[r - l + 1];
+        int i = l, j = m + 1, k = 0;
+        while (i <= m && j <= r) { ops++; tmp[k++] = (a[i] <= a[j]) ? a[i++] : a[j++]; }
+        while (i <= m) tmp[k++] = a[i++];
+        while (j <= r) tmp[k++] = a[j++];
+        for (k = 0; k < tmp.length; k++) a[l + k] = tmp[k];
+    }
+    static void quickSort(int[] a, int low, int high) {
+        if (low < high) {
+            int pivot = a[high], i = low - 1;
+            for (int j = low; j < high; j++) {
+                ops++;
+                if (a[j] < pivot) { i++; int t = a[i]; a[i] = a[j]; a[j] = t; }
+            }
+            int t = a[i + 1]; a[i + 1] = a[high]; a[high] = t;
+            int p = i + 1;
+            quickSort(a, low, p - 1);
+            quickSort(a, p + 1, high);
+        }
+    }
+    public static void main(String[] args) {
+        int[] orig = {64, 34, 25, 12, 22, 11, 90, 5};
+        System.out.println("Input array  : " + Arrays.toString(orig));
+ 
+        int[] a = orig.clone(); ops = 0; bubbleSort(a);
+        System.out.println("Bubble Sort  : " + Arrays.toString(a) + "  comparisons = " + ops);
+        int[] b = orig.clone(); ops = 0; mergeSort(b, 0, b.length - 1);
+        System.out.println("Merge Sort   : " + Arrays.toString(b) + "  comparisons = " + ops);
+        int[] c = orig.clone(); ops = 0; quickSort(c, 0, c.length - 1);
+        System.out.println("Quick Sort   : " + Arrays.toString(c) + "  comparisons = " + ops);
+ 
+        System.out.println("\nComplexity   Best        Average     Worst       Space");
+        System.out.println("Bubble Sort  O(n)        O(n^2)      O(n^2)      O(1)");
+        System.out.println("Merge Sort   O(n log n)  O(n log n)  O(n log n)  O(n)");
+        System.out.println("Quick Sort   O(n log n)  O(n log n)  O(n^2)      O(log n)");
+    }
+}
+30.import java.util.*;
+ 
+public class Main {
+    // ================= 1. SEPARATE CHAINING =================
+    @SuppressWarnings("unchecked")
+    static class ChainTable {
+        LinkedList<Integer>[] table;
+        int size = 0, cap;
+        double LOAD = 1.5;     // average chain length allowed
+        ChainTable(int c) {
+            cap = c;
+            table = new LinkedList[cap];
+            for (int i = 0; i < cap; i++) table[i] = new LinkedList<>();
+        }
+        void insert(int key) {
+            int idx = key % cap;
+            if (!table[idx].isEmpty()) System.out.println("  Collision at index " + idx + " for key " + key + " (chained)");
+            table[idx].add(key);
+            size++;
+            if ((double) size / cap > LOAD) rehash();
+        }
+        @SuppressWarnings("unchecked")
+        void rehash() {
+            System.out.println("  Load factor exceeded -> Rehashing: " + cap + " -> " + (cap * 2 + 1));
+            LinkedList<Integer>[] old = table;
+            cap = cap * 2 + 1;
+            table = new LinkedList[cap];
+            for (int i = 0; i < cap; i++) table[i] = new LinkedList<>();
+            for (LinkedList<Integer> l : old) for (int k : l) table[k % cap].add(k);
+        }
+        void display() { for (int i = 0; i < cap; i++) System.out.println("  " + i + " : " + table[i]); }
+    }
+ 
+    // ================= 2. OPEN ADDRESSING (Linear Probing) =================
+    static class ProbeTable {
+        Integer[] table;
+        int size = 0, cap;
+        double LOAD = 0.7;
+        ProbeTable(int c) { cap = c; table = new Integer[cap]; }
+        void insert(int key) {
+            int idx = key % cap;
+            while (table[idx] != null) {
+                System.out.println("  Collision at index " + idx + " for key " + key + " -> probing next slot");
+                idx = (idx + 1) % cap;
+            }
+            table[idx] = key;
+            size++;
+            if ((double) size / cap > LOAD) rehash();
+        }
+        void rehash() {
+            System.out.println("  Load factor exceeded -> Rehashing: " + cap + " -> " + (cap * 2 + 1));
+            Integer[] old = table;
+            cap = cap * 2 + 1;
+            table = new Integer[cap];
+            size = 0;
+            for (Integer k : old) if (k != null) {
+                int idx = k % cap;
+                while (table[idx] != null) idx = (idx + 1) % cap;
+                table[idx] = k;
+                size++;
+            }
+        }
+        void display() { for (int i = 0; i < cap; i++) System.out.println("  " + i + " : " + (table[i] == null ? "-" : table[i])); }
+    }
+ 
+    public static void main(String[] args) {
+        System.out.println("=== Separate Chaining (size 5, max load factor 1.5) ===");
+        ChainTable c = new ChainTable(5);
+        for (int k : new int[]{15, 25, 35, 5, 12, 22, 7, 17}) { System.out.println("Insert " + k); c.insert(k); }
+        System.out.println("Final table:");
+        c.display();
+ 
+        System.out.println("\n=== Open Addressing - Linear Probing (size 7, max load factor 0.7) ===");
+        ProbeTable p = new ProbeTable(7);
+        for (int k : new int[]{10, 17, 24, 31, 5}) { System.out.println("Insert " + k); p.insert(k); }
+        System.out.println("Final table:");
+        p.display();
+    }
+}

@@ -1,0 +1,758 @@
+1.import java.util.Scanner;
+
+public class StudentGrade {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Student Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Roll Number: ");
+        int rollNo = sc.nextInt();
+
+        System.out.print("Enter Marks in Subject 1: ");
+        int m1 = sc.nextInt();
+
+        System.out.print("Enter Marks in Subject 2: ");
+        int m2 = sc.nextInt();
+
+        System.out.print("Enter Marks in Subject 3: ");
+        int m3 = sc.nextInt();
+
+        int total = m1 + m2 + m3;
+        double average = total / 3.0;
+        char grade;
+
+        if (average >= 90)
+            grade = 'A';
+        else if (average >= 80)
+            grade = 'B';
+        else if (average >= 70)
+            grade = 'C';
+        else if (average >= 60)
+            grade = 'D';
+        else
+            grade = 'F';
+
+        System.out.println("\n----- Student Report -----");
+        System.out.println("Name      : " + name);
+        System.out.println("Roll No   : " + rollNo);
+        System.out.println("Total     : " + total);
+        System.out.println("Average   : " + average);
+        System.out.println("Grade     : " + grade);
+
+        sc.close();
+    }
+}
+
+2.import java.util.Scanner;
+
+public class BankAccount {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Account Number: ");
+        int accNo = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Account Holder Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Initial Balance: ");
+        double balance = sc.nextDouble();
+
+        System.out.print("Enter Deposit Amount: ");
+        double deposit = sc.nextDouble();
+        balance = balance + deposit;
+
+        System.out.print("Enter Withdrawal Amount: ");
+        double withdraw = sc.nextDouble();
+
+        if (withdraw <= balance) {
+            balance = balance - withdraw;
+            System.out.println("Withdrawal Successful");
+        } else {
+            System.out.println("Insufficient Balance");
+        }
+
+        System.out.println("\nAccount Number      : " + accNo);
+        System.out.println("Account Holder      : " + name);
+        System.out.println("Available Balance   : " + balance);
+
+        sc.close();
+    }
+}
+
+3.import java.util.Scanner;
+
+class Product {
+    String name;
+    double price;
+    int stock;
+
+    void getDetails() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Product Name: ");
+        name = sc.nextLine();
+
+        System.out.print("Enter Product Price: ");
+        price = sc.nextDouble();
+
+        System.out.print("Enter Stock Quantity: ");
+        stock = sc.nextInt();
+    }
+
+    void display() {
+        System.out.println("\nProduct Details");
+        System.out.println("Product Name : " + name);
+        System.out.println("Price        : " + price);
+        System.out.println("Stock        : " + stock);
+    }
+}
+
+public class ProductCatalog {
+    public static void main(String[] args) {
+        Product p = new Product();
+        p.getDetails();
+        p.display();
+    }
+}
+
+4.import java.util.Scanner;
+
+public class Salary {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Employee Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Basic Salary: ");
+        double basic = sc.nextDouble();
+
+        double hra = basic * 0.20;
+        double da = basic * 0.10;
+        double gross = basic + hra + da;
+        double deduction = gross * 0.05;
+        double net = gross - deduction;
+
+        System.out.println("\nEmployee Name : " + name);
+        System.out.println("Basic Salary  : " + basic);
+        System.out.println("HRA           : " + hra);
+        System.out.println("DA            : " + da);
+        System.out.println("Gross Salary  : " + gross);
+        System.out.println("Deduction     : " + deduction);
+        System.out.println("Net Salary    : " + net);
+
+        sc.close();
+    }
+}
+
+5.import java.util.Scanner;
+
+public class Bank {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter Account Holder Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Current Balance: ");
+        double balance = sc.nextDouble();
+
+        System.out.print("Enter Withdrawal Amount: ");
+        double withdraw = sc.nextDouble();
+
+        double minBalance = 1000;
+
+        if ((balance - withdraw) >= minBalance) {
+            balance = balance - withdraw;
+            System.out.println("Withdrawal Successful");
+            System.out.println("Account Holder: " + name);
+            System.out.println("Remaining Balance: " + balance);
+        } else {
+            System.out.println("Withdrawal Not Allowed.");
+            System.out.println("Minimum Balance of 1000 should be maintained.");
+        }
+
+        sc.close();
+    }
+}
+
+6.import java.util.Scanner;
+import java.util.Random;
+
+public class OTPVerification {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+
+        int otp = 1000 + rand.nextInt(9000);
+        int attempts = 3;
+        boolean verified = false;
+
+        System.out.println("Generated OTP: " + otp);
+
+        for (int i = 1; i <= attempts; i++) {
+            System.out.print("Enter OTP: ");
+            int enteredOTP = sc.nextInt();
+
+            if (enteredOTP == otp) {
+                System.out.println("OTP Verified Successfully");
+                verified = true;
+                break;
+            } else {
+                System.out.println("Invalid OTP. Attempts remaining: " + (attempts - i));
+            }
+        }
+
+        if (!verified) {
+            System.out.println("OTP Verification Failed");
+        }
+
+        sc.close();
+    }
+}
+
+7.class Employee {
+    int empId;
+    String empName;
+    double basicSalary;
+
+    Employee(int id, String name, double salary) {
+        empId = id;
+        empName = name;
+        basicSalary = salary;
+    }
+
+    void displayDetails() {
+        System.out.println("Employee ID   : " + empId);
+        System.out.println("Employee Name : " + empName);
+        System.out.println("Basic Salary  : " + basicSalary);
+    }
+
+    void calculateSalary() {
+        System.out.println("Basic Salary: " + basicSalary);
+    }
+}
+
+class Payroll extends Employee {
+    double allowance;
+    double deduction;
+
+    Payroll(int id, String name, double salary, double allowance, double deduction) {
+        super(id, name, salary);
+        this.allowance = allowance;
+        this.deduction = deduction;
+    }
+
+    @Override
+    void calculateSalary() {
+        double grossSalary = basicSalary + allowance - deduction;
+        System.out.println("Allowance     : " + allowance);
+        System.out.println("Deduction     : " + deduction);
+        System.out.println("Gross Salary  : " + grossSalary);
+    }
+}
+
+public class EmployeePayroll {
+    public static void main(String[] args) {
+        Payroll emp = new Payroll(101, "Arun", 30000, 5000, 2000);
+
+        System.out.println("Employee Payroll Details");
+        System.out.println("------------------------");
+        emp.displayDetails();
+        emp.calculateSalary();
+    }
+}
+
+8.class Person {
+    String name;
+    int id;
+
+    Person(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    void displayPerson() {
+        System.out.println("Name : " + name);
+        System.out.println("ID   : " + id);
+    }
+}
+
+class Student extends Person {
+    String department;
+
+    Student(String name, int id, String department) {
+        super(name, id);
+        this.department = department;
+    }
+
+    void displayStudent() {
+        displayPerson();
+        System.out.println("Department : " + department);
+    }
+}
+
+class Faculty extends Person {
+    String subject;
+
+    Faculty(String name, int id, String subject) {
+        super(name, id);
+        this.subject = subject;
+    }
+
+    void displayFaculty() {
+        displayPerson();
+        System.out.println("Subject : " + subject);
+    }
+}
+
+class Course {
+    String courseName;
+    int courseCode;
+
+    Course(String courseName, int courseCode) {
+        this.courseName = courseName;
+        this.courseCode = courseCode;
+    }
+
+    void displayCourse() {
+        System.out.println("Course Name : " + courseName);
+        System.out.println("Course Code : " + courseCode);
+    }
+}
+
+public class InheritanceDemo {
+    public static void main(String[] args) {
+        Student s = new Student("Rahul", 101, "Computer Science");
+        Faculty f = new Faculty("Dr. Kumar", 201, "Java Programming");
+        Course c = new Course("Object Oriented Programming", 501);
+
+        System.out.println("Student Details");
+        System.out.println("----------------");
+        s.displayStudent();
+
+        System.out.println("\nFaculty Details");
+        System.out.println("----------------");
+        f.displayFaculty();
+
+        System.out.println("\nCourse Details");
+        System.out.println("----------------");
+        c.displayCourse();
+    }
+}
+
+9.class RecursionDemo {
+    int factorial(int n) {
+        if (n == 0 || n == 1)
+            return 1;
+        else
+            return n * factorial(n - 1);
+    }
+
+    int fibonacci(int n) {
+        if (n == 0)
+            return 0;
+        else if (n == 1)
+            return 1;
+        else
+            return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    void display(int num) {
+        System.out.println("Integer value: " + num);
+    }
+
+    void display(String text) {
+        System.out.println("String value: " + text);
+    }
+}
+
+class Animal {
+    void sound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class RecursiveMethodDemo {
+    public static void main(String[] args) {
+        RecursionDemo obj = new RecursionDemo();
+
+        System.out.println("Factorial of 5: " + obj.factorial(5));
+        System.out.print("Fibonacci series: ");
+        for (int i = 0; i < 6; i++) {
+            System.out.print(obj.fibonacci(i) + " ");
+        }
+
+        System.out.println("\n\nMethod Overloading:");
+        obj.display(100);
+        obj.display("Java Programming");
+
+        System.out.println("\nMethod Overriding:");
+        Animal a = new Dog();
+        a.sound();
+    }
+}
+
+10.
+import java.util.Scanner;
+
+public class MatrixOps {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the no. of rows for MAT-1:");
+        int r1 = sc.nextInt();
+        System.out.println("Enter the no. of cols for MAT-1:");
+        int c1 = sc.nextInt();
+
+        int[][] a = new int[r1][c1];
+        System.out.println("Enter " + (r1 * c1) + " numbers:");
+        for (int i = 0; i < r1; i++)
+            for (int j = 0; j < c1; j++)
+                a[i][j] = sc.nextInt();
+
+        System.out.println("Enter the no. of rows for MAT-2:");
+        int r2 = sc.nextInt();
+        System.out.println("Enter the no. of cols for MAT-2:");
+        int c2 = sc.nextInt();
+
+        int[][] b = new int[r2][c2];
+        System.out.println("Enter " + (r2 * c2) + " numbers:");
+        for (int i = 0; i < r2; i++)
+            for (int j = 0; j < c2; j++)
+                b[i][j] = sc.nextInt();
+
+        if (r1 == r2 && c1 == c2) {
+            int[][] add = new int[r1][c1];
+            int[][] sub = new int[r1][c1];
+
+            for (int i = 0; i < r1; i++)
+                for (int j = 0; j < c1; j++) {
+                    add[i][j] = a[i][j] + b[i][j];
+                    sub[i][j] = a[i][j] - b[i][j];
+                }
+
+            System.out.println("Addition:");
+            for (int i = 0; i < r1; i++) {
+                for (int j = 0; j < c1; j++)
+                    System.out.print(add[i][j] + " ");
+                System.out.println();
+            }
+
+            System.out.println("Subtraction:");
+            for (int i = 0; i < r1; i++) {
+                for (int j = 0; j < c1; j++)
+                    System.out.print(sub[i][j] + " ");
+                System.out.println();
+            }
+        } else {
+            System.out.println("Addition and subtraction not possible.");
+        }
+
+        System.out.println("Transpose of A:");
+        for (int j = 0; j < c1; j++) {
+            for (int i = 0; i < r1; i++)
+                System.out.print(a[i][j] + " ");
+            System.out.println();
+        }
+
+        if (c1 == r2) {
+            System.out.println("Multiplication:");
+            for (int i = 0; i < r1; i++) {
+                for (int j = 0; j < c2; j++) {
+                    int sum = 0;
+                    for (int k = 0; k < c1; k++)
+                        sum += a[i][k] * b[k][j];
+                    System.out.print(sum + " ");
+                }
+                System.out.println();
+            }
+        } else {
+            System.out.println("Multiplication not possible.");
+        }
+
+        sc.close();
+    }
+}
+
+
+11.public class MatrixTraversal {
+    static void spiralOrder(int[][] matrix) {
+        int top = 0;
+        int bottom = matrix.length - 1;
+        int left = 0;
+        int right = matrix[0].length - 1;
+
+        System.out.println("Spiral Order:");
+        while (top <= bottom && left <= right) {
+            for (int i = left; i <= right; i++)
+                System.out.print(matrix[top][i] + " ");
+            top++;
+
+            for (int i = top; i <= bottom; i++)
+                System.out.print(matrix[i][right] + " ");
+            right--;
+
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--)
+                    System.out.print(matrix[bottom][i] + " ");
+                bottom--;
+            }
+
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--)
+                    System.out.print(matrix[i][left] + " ");
+                left++;
+            }
+        }
+    }
+
+    static void waveOrder(int[][] matrix) {
+        System.out.println("\n\nWave Order:");
+        for (int j = 0; j < matrix[0].length; j++) {
+            if (j % 2 == 0) {
+                for (int i = 0; i < matrix.length; i++)
+                    System.out.print(matrix[i][j] + " ");
+            } else {
+                for (int i = matrix.length - 1; i >= 0; i--)
+                    System.out.print(matrix[i][j] + " ");
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+
+        System.out.println("Given Matrix:");
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++)
+                System.out.print(matrix[i][j] + " ");
+            System.out.println();
+        }
+
+        spiralOrder(matrix);
+        waveOrder(matrix);
+    }
+}
+
+12.import java.util.Arrays;
+
+public class AlgorithmImplementation {
+    static boolean checkAnagram(String str1, String str2) {
+        char[] a = str1.toCharArray();
+        char[] b = str2.toCharArray();
+        Arrays.sort(a);
+        Arrays.sort(b);
+        return Arrays.equals(a, b);
+    }
+
+    static void patternMatch(String text, String pattern) {
+        int n = text.length();
+        int m = pattern.length();
+        boolean found = false;
+
+        for (int i = 0; i <= n - m; i++) {
+            int j;
+            for (j = 0; j < m; j++) {
+                if (text.charAt(i + j) != pattern.charAt(j))
+                    break;
+            }
+
+            if (j == m) {
+                System.out.println("Pattern found at index: " + i);
+                found = true;
+            }
+        }
+
+        if (!found)
+            System.out.println("Pattern not found");
+    }
+
+    static int maxSubarraySum(int[] arr) {
+        int currentSum = arr[0];
+        int maxSum = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            currentSum = Math.max(arr[i], currentSum + arr[i]);
+            maxSum = Math.max(maxSum, currentSum);
+        }
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        String str1 = "listen";
+        String str2 = "silent";
+
+        System.out.println("Anagram Checking:");
+        if (checkAnagram(str1, str2))
+            System.out.println(str1 + " and " + str2 + " are Anagrams");
+        else
+            System.out.println("Not Anagrams");
+
+        System.out.println("\nPattern Matching:");
+        String text = "Java Programming";
+        String pattern = "Program";
+        patternMatch(text, pattern);
+
+        System.out.println("\nKadane's Algorithm:");
+        int[] arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        System.out.println("Maximum Subarray Sum: " + maxSubarraySum(arr));
+    }
+}
+
+13.import java.io.*;
+import java.util.Scanner;
+
+class InvalidAgeException extends Exception {
+    InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class CustomExceptionFileDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter your age: ");
+            int age = sc.nextInt();
+
+            if (age < 18) {
+                throw new InvalidAgeException("Age must be 18 or above");
+            }
+
+            String data = "User age is: " + age;
+
+            FileWriter writer = new FileWriter("student.txt");
+            writer.write(data);
+            writer.close();
+            System.out.println("Data written successfully");
+
+            FileReader reader = new FileReader("student.txt");
+            int ch;
+            System.out.println("\nFile Content:");
+            while ((ch = reader.read()) != -1) {
+                System.out.print((char) ch);
+            }
+            reader.close();
+        } catch (InvalidAgeException e) {
+            System.out.println("Custom Exception: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("File Error: " + e.getMessage());
+        }
+
+        sc.close();
+    }
+}
+
+14.import java.util.*;
+import java.util.stream.*;
+
+public class CollectionProcessing {
+    public static void main(String[] args) {
+        // ArrayList
+        ArrayList<String> students = new ArrayList<>();
+        students.add("Arun");
+        students.add("Bala");
+        students.add("Chitra");
+        students.add("Arun");
+
+        System.out.println("ArrayList:");
+        students.forEach(name -> System.out.println(name));
+
+        // HashSet
+        HashSet<String> uniqueStudents = new HashSet<>(students);
+        System.out.println("\nHashSet (Unique Names):");
+        uniqueStudents.forEach(name -> System.out.println(name));
+
+        // HashMap
+        HashMap<Integer, String> studentMap = new HashMap<>();
+        studentMap.put(101, "Arun");
+        studentMap.put(102, "Bala");
+        studentMap.put(103, "Chitra");
+
+        System.out.println("\nHashMap:");
+        studentMap.forEach((id, name) ->
+            System.out.println(id + " : " + name));
+
+        // Stream API
+        System.out.println("\nNames starting with 'A':");
+        List<String> filteredNames = students.stream()
+            .filter(name -> name.startsWith("A"))
+            .collect(Collectors.toList());
+
+        filteredNames.forEach(name -> System.out.println(name));
+    }
+}
+
+15.import java.sql.*;
+
+public class StudentCRUD {
+    static final String URL = "jdbc:mysql://localhost:3306/studentdb";
+    static final String USER = "root";
+    static final String PASSWORD = "password";
+
+    public static void main(String[] args) {
+        try {
+            Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Database Connected Successfully");
+
+            Statement stmt = con.createStatement();
+
+            // CREATE - Insert record
+            String insertQuery =
+                "INSERT INTO student VALUES(101,'Arun','CSE',85)";
+            stmt.executeUpdate(insertQuery);
+            System.out.println("Record Inserted Successfully");
+
+            // READ - Display records
+            ResultSet rs = stmt.executeQuery("SELECT * FROM student");
+            System.out.println("\nStudent Details:");
+            while (rs.next()) {
+                System.out.println(
+                    rs.getInt("id") + " " +
+                    rs.getString("name") + " " +
+                    rs.getString("department") + " " +
+                    rs.getInt("marks")
+                );
+            }
+            rs.close();
+
+            // UPDATE - Modify record
+            String updateQuery =
+                "UPDATE student SET marks=90 WHERE id=101";
+            stmt.executeUpdate(updateQuery);
+            System.out.println("\nRecord Updated Successfully");
+
+            // DELETE - Remove record
+            String deleteQuery = "DELETE FROM student WHERE id=101";
+            stmt.executeUpdate(deleteQuery);
+            System.out.println("Record Deleted Successfully");
+
+            stmt.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+
+
+function p($n) {
+  $t = Get-Content practical_programs.txt -Raw
+  $m = [regex]::Match($t, "(?ms)^$n\.(.*?)(?=^\d+\.|\z)")
+  $m.Groups[1].Value.Trim() | Set-Clipboard
+}
+

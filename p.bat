@@ -1,0 +1,3 @@
+@echo off
+if "%~1"=="" (echo Usage: p NUMBER   e.g. p 12 & exit /b)
+powershell -NoProfile -Command "$f=Get-ChildItem -LiteralPath '%~dp0' -Filter 'practical_programs.txt*' -File | Select-Object -First 1; if(-not $f){Write-Host 'practical_programs.txt not found next to p.bat' -ForegroundColor Red; exit}; $t=Get-Content -LiteralPath $f.FullName -Raw; $m=[regex]::Match($t,'(?ms)^%~1\.(.*?)(?=^\d+\.|\z)'); if($m.Success){$m.Groups[1].Value.Trim() | Set-Clipboard; Write-Host 'Program %~1 copied. Press Ctrl+V to paste.' -ForegroundColor Green}else{Write-Host 'Program %~1 not found' -ForegroundColor Red}"
