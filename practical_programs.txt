@@ -1,758 +1,605 @@
-1.import java.util.Scanner;
-
-public class StudentGrade {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter Student Name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Enter Roll Number: ");
-        int rollNo = sc.nextInt();
-
-        System.out.print("Enter Marks in Subject 1: ");
-        int m1 = sc.nextInt();
-
-        System.out.print("Enter Marks in Subject 2: ");
-        int m2 = sc.nextInt();
-
-        System.out.print("Enter Marks in Subject 3: ");
-        int m3 = sc.nextInt();
-
-        int total = m1 + m2 + m3;
-        double average = total / 3.0;
-        char grade;
-
-        if (average >= 90)
-            grade = 'A';
-        else if (average >= 80)
-            grade = 'B';
-        else if (average >= 70)
-            grade = 'C';
-        else if (average >= 60)
-            grade = 'D';
-        else
-            grade = 'F';
-
-        System.out.println("\n----- Student Report -----");
-        System.out.println("Name      : " + name);
-        System.out.println("Roll No   : " + rollNo);
-        System.out.println("Total     : " + total);
-        System.out.println("Average   : " + average);
-        System.out.println("Grade     : " + grade);
-
-        sc.close();
-    }
-}
-
-2.import java.util.Scanner;
-
-public class BankAccount {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter Account Number: ");
-        int accNo = sc.nextInt();
-        sc.nextLine();
-
-        System.out.print("Enter Account Holder Name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Enter Initial Balance: ");
-        double balance = sc.nextDouble();
-
-        System.out.print("Enter Deposit Amount: ");
-        double deposit = sc.nextDouble();
-        balance = balance + deposit;
-
-        System.out.print("Enter Withdrawal Amount: ");
-        double withdraw = sc.nextDouble();
-
-        if (withdraw <= balance) {
-            balance = balance - withdraw;
-            System.out.println("Withdrawal Successful");
-        } else {
-            System.out.println("Insufficient Balance");
-        }
-
-        System.out.println("\nAccount Number      : " + accNo);
-        System.out.println("Account Holder      : " + name);
-        System.out.println("Available Balance   : " + balance);
-
-        sc.close();
-    }
-}
-
-3.import java.util.Scanner;
-
-class Product {
-    String name;
-    double price;
-    int stock;
-
-    void getDetails() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter Product Name: ");
-        name = sc.nextLine();
-
-        System.out.print("Enter Product Price: ");
-        price = sc.nextDouble();
-
-        System.out.print("Enter Stock Quantity: ");
-        stock = sc.nextInt();
-    }
-
-    void display() {
-        System.out.println("\nProduct Details");
-        System.out.println("Product Name : " + name);
-        System.out.println("Price        : " + price);
-        System.out.println("Stock        : " + stock);
-    }
-}
-
-public class ProductCatalog {
-    public static void main(String[] args) {
-        Product p = new Product();
-        p.getDetails();
-        p.display();
-    }
-}
-
-4.import java.util.Scanner;
-
-public class Salary {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter Employee Name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Enter Basic Salary: ");
-        double basic = sc.nextDouble();
-
-        double hra = basic * 0.20;
-        double da = basic * 0.10;
-        double gross = basic + hra + da;
-        double deduction = gross * 0.05;
-        double net = gross - deduction;
-
-        System.out.println("\nEmployee Name : " + name);
-        System.out.println("Basic Salary  : " + basic);
-        System.out.println("HRA           : " + hra);
-        System.out.println("DA            : " + da);
-        System.out.println("Gross Salary  : " + gross);
-        System.out.println("Deduction     : " + deduction);
-        System.out.println("Net Salary    : " + net);
-
-        sc.close();
-    }
-}
-
-5.import java.util.Scanner;
-
-public class Bank {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter Account Holder Name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Enter Current Balance: ");
-        double balance = sc.nextDouble();
-
-        System.out.print("Enter Withdrawal Amount: ");
-        double withdraw = sc.nextDouble();
-
-        double minBalance = 1000;
-
-        if ((balance - withdraw) >= minBalance) {
-            balance = balance - withdraw;
-            System.out.println("Withdrawal Successful");
-            System.out.println("Account Holder: " + name);
-            System.out.println("Remaining Balance: " + balance);
-        } else {
-            System.out.println("Withdrawal Not Allowed.");
-            System.out.println("Minimum Balance of 1000 should be maintained.");
-        }
-
-        sc.close();
-    }
-}
-
-6.import java.util.Scanner;
-import java.util.Random;
-
-public class OTPVerification {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Random rand = new Random();
-
-        int otp = 1000 + rand.nextInt(9000);
-        int attempts = 3;
-        boolean verified = false;
-
-        System.out.println("Generated OTP: " + otp);
-
-        for (int i = 1; i <= attempts; i++) {
-            System.out.print("Enter OTP: ");
-            int enteredOTP = sc.nextInt();
-
-            if (enteredOTP == otp) {
-                System.out.println("OTP Verified Successfully");
-                verified = true;
-                break;
-            } else {
-                System.out.println("Invalid OTP. Attempts remaining: " + (attempts - i));
-            }
-        }
-
-        if (!verified) {
-            System.out.println("OTP Verification Failed");
-        }
-
-        sc.close();
-    }
-}
-
-7.class Employee {
-    int empId;
-    String empName;
-    double basicSalary;
-
-    Employee(int id, String name, double salary) {
-        empId = id;
-        empName = name;
-        basicSalary = salary;
-    }
-
-    void displayDetails() {
-        System.out.println("Employee ID   : " + empId);
-        System.out.println("Employee Name : " + empName);
-        System.out.println("Basic Salary  : " + basicSalary);
-    }
-
-    void calculateSalary() {
-        System.out.println("Basic Salary: " + basicSalary);
-    }
-}
-
-class Payroll extends Employee {
-    double allowance;
-    double deduction;
-
-    Payroll(int id, String name, double salary, double allowance, double deduction) {
-        super(id, name, salary);
-        this.allowance = allowance;
-        this.deduction = deduction;
-    }
-
-    @Override
-    void calculateSalary() {
-        double grossSalary = basicSalary + allowance - deduction;
-        System.out.println("Allowance     : " + allowance);
-        System.out.println("Deduction     : " + deduction);
-        System.out.println("Gross Salary  : " + grossSalary);
-    }
-}
-
-public class EmployeePayroll {
-    public static void main(String[] args) {
-        Payroll emp = new Payroll(101, "Arun", 30000, 5000, 2000);
-
-        System.out.println("Employee Payroll Details");
-        System.out.println("------------------------");
-        emp.displayDetails();
-        emp.calculateSalary();
-    }
-}
-
-8.class Person {
-    String name;
-    int id;
-
-    Person(String name, int id) {
-        this.name = name;
-        this.id = id;
-    }
-
-    void displayPerson() {
-        System.out.println("Name : " + name);
-        System.out.println("ID   : " + id);
-    }
-}
-
-class Student extends Person {
-    String department;
-
-    Student(String name, int id, String department) {
-        super(name, id);
-        this.department = department;
-    }
-
-    void displayStudent() {
-        displayPerson();
-        System.out.println("Department : " + department);
-    }
-}
-
-class Faculty extends Person {
-    String subject;
-
-    Faculty(String name, int id, String subject) {
-        super(name, id);
-        this.subject = subject;
-    }
-
-    void displayFaculty() {
-        displayPerson();
-        System.out.println("Subject : " + subject);
-    }
-}
-
-class Course {
-    String courseName;
-    int courseCode;
-
-    Course(String courseName, int courseCode) {
-        this.courseName = courseName;
-        this.courseCode = courseCode;
-    }
-
-    void displayCourse() {
-        System.out.println("Course Name : " + courseName);
-        System.out.println("Course Code : " + courseCode);
-    }
-}
-
-public class InheritanceDemo {
-    public static void main(String[] args) {
-        Student s = new Student("Rahul", 101, "Computer Science");
-        Faculty f = new Faculty("Dr. Kumar", 201, "Java Programming");
-        Course c = new Course("Object Oriented Programming", 501);
-
-        System.out.println("Student Details");
-        System.out.println("----------------");
-        s.displayStudent();
-
-        System.out.println("\nFaculty Details");
-        System.out.println("----------------");
-        f.displayFaculty();
-
-        System.out.println("\nCourse Details");
-        System.out.println("----------------");
-        c.displayCourse();
-    }
-}
-
-9.class RecursionDemo {
-    int factorial(int n) {
-        if (n == 0 || n == 1)
-            return 1;
-        else
-            return n * factorial(n - 1);
-    }
-
-    int fibonacci(int n) {
-        if (n == 0)
-            return 0;
-        else if (n == 1)
-            return 1;
-        else
-            return fibonacci(n - 1) + fibonacci(n - 2);
-    }
-
-    void display(int num) {
-        System.out.println("Integer value: " + num);
-    }
-
-    void display(String text) {
-        System.out.println("String value: " + text);
-    }
-}
-
-class Animal {
-    void sound() {
-        System.out.println("Animal makes a sound");
-    }
-}
-
-class Dog extends Animal {
-    @Override
-    void sound() {
-        System.out.println("Dog barks");
-    }
-}
-
-public class RecursiveMethodDemo {
-    public static void main(String[] args) {
-        RecursionDemo obj = new RecursionDemo();
-
-        System.out.println("Factorial of 5: " + obj.factorial(5));
-        System.out.print("Fibonacci series: ");
-        for (int i = 0; i < 6; i++) {
-            System.out.print(obj.fibonacci(i) + " ");
-        }
-
-        System.out.println("\n\nMethod Overloading:");
-        obj.display(100);
-        obj.display("Java Programming");
-
-        System.out.println("\nMethod Overriding:");
-        Animal a = new Dog();
-        a.sound();
-    }
-}
-
-10.
-import java.util.Scanner;
-
-public class MatrixOps {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Enter the no. of rows for MAT-1:");
-        int r1 = sc.nextInt();
-        System.out.println("Enter the no. of cols for MAT-1:");
-        int c1 = sc.nextInt();
-
-        int[][] a = new int[r1][c1];
-        System.out.println("Enter " + (r1 * c1) + " numbers:");
-        for (int i = 0; i < r1; i++)
-            for (int j = 0; j < c1; j++)
-                a[i][j] = sc.nextInt();
-
-        System.out.println("Enter the no. of rows for MAT-2:");
-        int r2 = sc.nextInt();
-        System.out.println("Enter the no. of cols for MAT-2:");
-        int c2 = sc.nextInt();
-
-        int[][] b = new int[r2][c2];
-        System.out.println("Enter " + (r2 * c2) + " numbers:");
-        for (int i = 0; i < r2; i++)
-            for (int j = 0; j < c2; j++)
-                b[i][j] = sc.nextInt();
-
-        if (r1 == r2 && c1 == c2) {
-            int[][] add = new int[r1][c1];
-            int[][] sub = new int[r1][c1];
-
-            for (int i = 0; i < r1; i++)
-                for (int j = 0; j < c1; j++) {
-                    add[i][j] = a[i][j] + b[i][j];
-                    sub[i][j] = a[i][j] - b[i][j];
-                }
-
-            System.out.println("Addition:");
-            for (int i = 0; i < r1; i++) {
-                for (int j = 0; j < c1; j++)
-                    System.out.print(add[i][j] + " ");
-                System.out.println();
-            }
-
-            System.out.println("Subtraction:");
-            for (int i = 0; i < r1; i++) {
-                for (int j = 0; j < c1; j++)
-                    System.out.print(sub[i][j] + " ");
-                System.out.println();
-            }
-        } else {
-            System.out.println("Addition and subtraction not possible.");
-        }
-
-        System.out.println("Transpose of A:");
-        for (int j = 0; j < c1; j++) {
-            for (int i = 0; i < r1; i++)
-                System.out.print(a[i][j] + " ");
-            System.out.println();
-        }
-
-        if (c1 == r2) {
-            System.out.println("Multiplication:");
-            for (int i = 0; i < r1; i++) {
-                for (int j = 0; j < c2; j++) {
-                    int sum = 0;
-                    for (int k = 0; k < c1; k++)
-                        sum += a[i][k] * b[k][j];
-                    System.out.print(sum + " ");
-                }
-                System.out.println();
-            }
-        } else {
-            System.out.println("Multiplication not possible.");
-        }
-
-        sc.close();
-    }
-}
-
-
-11.public class MatrixTraversal {
-    static void spiralOrder(int[][] matrix) {
-        int top = 0;
-        int bottom = matrix.length - 1;
-        int left = 0;
-        int right = matrix[0].length - 1;
-
-        System.out.println("Spiral Order:");
-        while (top <= bottom && left <= right) {
-            for (int i = left; i <= right; i++)
-                System.out.print(matrix[top][i] + " ");
-            top++;
-
-            for (int i = top; i <= bottom; i++)
-                System.out.print(matrix[i][right] + " ");
-            right--;
-
-            if (top <= bottom) {
-                for (int i = right; i >= left; i--)
-                    System.out.print(matrix[bottom][i] + " ");
-                bottom--;
-            }
-
-            if (left <= right) {
-                for (int i = bottom; i >= top; i--)
-                    System.out.print(matrix[i][left] + " ");
-                left++;
-            }
-        }
-    }
-
-    static void waveOrder(int[][] matrix) {
-        System.out.println("\n\nWave Order:");
-        for (int j = 0; j < matrix[0].length; j++) {
-            if (j % 2 == 0) {
-                for (int i = 0; i < matrix.length; i++)
-                    System.out.print(matrix[i][j] + " ");
-            } else {
-                for (int i = matrix.length - 1; i >= 0; i--)
-                    System.out.print(matrix[i][j] + " ");
-            }
-        }
-        System.out.println();
-    }
-
-    public static void main(String[] args) {
-        int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-
-        System.out.println("Given Matrix:");
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++)
-                System.out.print(matrix[i][j] + " ");
-            System.out.println();
-        }
-
-        spiralOrder(matrix);
-        waveOrder(matrix);
-    }
-}
-
-12.import java.util.Arrays;
-
-public class AlgorithmImplementation {
-    static boolean checkAnagram(String str1, String str2) {
-        char[] a = str1.toCharArray();
-        char[] b = str2.toCharArray();
-        Arrays.sort(a);
-        Arrays.sort(b);
-        return Arrays.equals(a, b);
-    }
-
-    static void patternMatch(String text, String pattern) {
-        int n = text.length();
-        int m = pattern.length();
-        boolean found = false;
-
-        for (int i = 0; i <= n - m; i++) {
-            int j;
-            for (j = 0; j < m; j++) {
-                if (text.charAt(i + j) != pattern.charAt(j))
-                    break;
-            }
-
-            if (j == m) {
-                System.out.println("Pattern found at index: " + i);
-                found = true;
-            }
-        }
-
-        if (!found)
-            System.out.println("Pattern not found");
-    }
-
-    static int maxSubarraySum(int[] arr) {
-        int currentSum = arr[0];
-        int maxSum = arr[0];
-
-        for (int i = 1; i < arr.length; i++) {
-            currentSum = Math.max(arr[i], currentSum + arr[i]);
-            maxSum = Math.max(maxSum, currentSum);
-        }
-        return maxSum;
-    }
-
-    public static void main(String[] args) {
-        String str1 = "listen";
-        String str2 = "silent";
-
-        System.out.println("Anagram Checking:");
-        if (checkAnagram(str1, str2))
-            System.out.println(str1 + " and " + str2 + " are Anagrams");
-        else
-            System.out.println("Not Anagrams");
-
-        System.out.println("\nPattern Matching:");
-        String text = "Java Programming";
-        String pattern = "Program";
-        patternMatch(text, pattern);
-
-        System.out.println("\nKadane's Algorithm:");
-        int[] arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        System.out.println("Maximum Subarray Sum: " + maxSubarraySum(arr));
-    }
-}
-
-13.import java.io.*;
-import java.util.Scanner;
-
-class InvalidAgeException extends Exception {
-    InvalidAgeException(String message) {
-        super(message);
-    }
-}
-
-public class CustomExceptionFileDemo {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        try {
-            System.out.print("Enter your age: ");
-            int age = sc.nextInt();
-
-            if (age < 18) {
-                throw new InvalidAgeException("Age must be 18 or above");
-            }
-
-            String data = "User age is: " + age;
-
-            FileWriter writer = new FileWriter("student.txt");
-            writer.write(data);
-            writer.close();
-            System.out.println("Data written successfully");
-
-            FileReader reader = new FileReader("student.txt");
-            int ch;
-            System.out.println("\nFile Content:");
-            while ((ch = reader.read()) != -1) {
-                System.out.print((char) ch);
-            }
-            reader.close();
-        } catch (InvalidAgeException e) {
-            System.out.println("Custom Exception: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("File Error: " + e.getMessage());
-        }
-
-        sc.close();
-    }
-}
-
-14.import java.util.*;
-import java.util.stream.*;
-
-public class CollectionProcessing {
-    public static void main(String[] args) {
-        // ArrayList
-        ArrayList<String> students = new ArrayList<>();
-        students.add("Arun");
-        students.add("Bala");
-        students.add("Chitra");
-        students.add("Arun");
-
-        System.out.println("ArrayList:");
-        students.forEach(name -> System.out.println(name));
-
-        // HashSet
-        HashSet<String> uniqueStudents = new HashSet<>(students);
-        System.out.println("\nHashSet (Unique Names):");
-        uniqueStudents.forEach(name -> System.out.println(name));
-
-        // HashMap
-        HashMap<Integer, String> studentMap = new HashMap<>();
-        studentMap.put(101, "Arun");
-        studentMap.put(102, "Bala");
-        studentMap.put(103, "Chitra");
-
-        System.out.println("\nHashMap:");
-        studentMap.forEach((id, name) ->
-            System.out.println(id + " : " + name));
-
-        // Stream API
-        System.out.println("\nNames starting with 'A':");
-        List<String> filteredNames = students.stream()
-            .filter(name -> name.startsWith("A"))
-            .collect(Collectors.toList());
-
-        filteredNames.forEach(name -> System.out.println(name));
-    }
-}
-
-15.import java.sql.*;
-
-public class StudentCRUD {
-    static final String URL = "jdbc:mysql://localhost:3306/studentdb";
-    static final String USER = "root";
-    static final String PASSWORD = "password";
-
-    public static void main(String[] args) {
-        try {
-            Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Database Connected Successfully");
-
-            Statement stmt = con.createStatement();
-
-            // CREATE - Insert record
-            String insertQuery =
-                "INSERT INTO student VALUES(101,'Arun','CSE',85)";
-            stmt.executeUpdate(insertQuery);
-            System.out.println("Record Inserted Successfully");
-
-            // READ - Display records
-            ResultSet rs = stmt.executeQuery("SELECT * FROM student");
-            System.out.println("\nStudent Details:");
-            while (rs.next()) {
-                System.out.println(
-                    rs.getInt("id") + " " +
-                    rs.getString("name") + " " +
-                    rs.getString("department") + " " +
-                    rs.getInt("marks")
-                );
-            }
-            rs.close();
-
-            // UPDATE - Modify record
-            String updateQuery =
-                "UPDATE student SET marks=90 WHERE id=101";
-            stmt.executeUpdate(updateQuery);
-            System.out.println("\nRecord Updated Successfully");
-
-            // DELETE - Remove record
-            String deleteQuery = "DELETE FROM student WHERE id=101";
-            stmt.executeUpdate(deleteQuery);
-            System.out.println("Record Deleted Successfully");
-
-            stmt.close();
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-}
-
-
-function p($n) {
-  $t = Get-Content practical_programs.txt -Raw
-  $m = [regex]::Match($t, "(?ms)^$n\.(.*?)(?=^\d+\.|\z)")
-  $m.Groups[1].Value.Trim() | Set-Clipboard
-}
-
+1.CREATE DATABASE IF NOT EXISTS ecommerce;
+USE ecommerce;
+
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15)
+);
+
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    stock INT DEFAULT 0
+);
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+CREATE TABLE Order_Items (
+    order_id INT,
+    product_id INT,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+INSERT INTO Customers VALUES
+(1, 'Arun', 'arun@gmail.com', '9876543210'),
+(2, 'Priya', 'priya@gmail.com', '9876501234');
+
+INSERT INTO Products VALUES
+(101, 'Laptop', 50000, 10),
+(102, 'Mouse', 500, 50);
+
+INSERT INTO Orders VALUES
+(1001, 1, '2026-10-20'),
+(1002, 2, '2026-10-21');
+
+INSERT INTO Order_Items VALUES
+(1001, 101, 1, 50000),
+(1001, 102, 2, 500),
+(1002, 102, 1, 500);
+
+SELECT c.customer_name, o.order_id, p.product_name, oi.quantity,
+       oi.unit_price, oi.quantity * oi.unit_price AS item_total
+FROM Customers c
+JOIN Orders o ON c.customer_id = o.customer_id
+JOIN Order_Items oi ON o.order_id = oi.order_id
+JOIN Products p ON oi.product_id = p.product_id;
+
+
+2.CREATE DATABASE IF NOT EXISTS university;
+USE university;
+
+CREATE TABLE Departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50) NOT NULL,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id)
+);
+
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50) NOT NULL,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id)
+);
+
+CREATE TABLE Instructors (
+    instructor_id INT PRIMARY KEY,
+    instructor_name VARCHAR(50) NOT NULL,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id)
+);
+
+CREATE TABLE Course_Sections (
+    section_id INT PRIMARY KEY,
+    course_id INT NOT NULL,
+    instructor_id INT NOT NULL,
+    semester VARCHAR(20),
+    academic_year INT,
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id),
+    FOREIGN KEY (instructor_id) REFERENCES Instructors(instructor_id)
+);
+
+CREATE TABLE Enrollments (
+    student_id INT,
+    section_id INT,
+    grade VARCHAR(2),
+    PRIMARY KEY (student_id, section_id),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (section_id) REFERENCES Course_Sections(section_id)
+);
+
+INSERT INTO Departments VALUES (1, 'Computer Science'), (2, 'Mathematics');
+INSERT INTO Students VALUES (101, 'Kavin', 1), (102, 'Meena', 2);
+INSERT INTO Courses VALUES (201, 'DBMS', 1), (202, 'Calculus', 2);
+INSERT INTO Instructors VALUES (301, 'Ravi', 1), (302, 'Devi', 2);
+INSERT INTO Course_Sections VALUES (401, 201, 301, 'Odd', 2026), (402, 202, 302, 'Odd', 2026);
+INSERT INTO Enrollments VALUES (101, 401, 'A'), (102, 402, 'B');
+
+SELECT s.student_name, c.course_name, e.grade
+FROM Enrollments e
+JOIN Students s ON e.student_id = s.student_id
+JOIN Course_Sections cs ON e.section_id = cs.section_id
+JOIN Courses c ON cs.course_id = c.course_id;
+
+
+3.CREATE DATABASE IF NOT EXISTS online_shop;
+USE online_shop;
+
+CREATE TABLE Shop_Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    balance DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE Shop_Orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    amount DECIMAL(10,2),
+    order_status VARCHAR(20),
+    FOREIGN KEY (customer_id) REFERENCES Shop_Customers(customer_id)
+);
+
+INSERT INTO Shop_Customers VALUES (1, 'Arun', 10000.00);
+INSERT INTO Shop_Orders VALUES (101, 1, 2500.00, 'Pending');
+
+START TRANSACTION;
+UPDATE Shop_Customers
+SET balance = balance - 2500.00
+WHERE customer_id = 1 AND balance >= 2500.00;
+
+INSERT INTO Shop_Orders VALUES (102, 1, 2500.00, 'Confirmed');
+COMMIT;
+
+SELECT * FROM Shop_Customers;
+SELECT * FROM Shop_Orders;
+
+START TRANSACTION;
+UPDATE Shop_Customers SET balance = balance - 1000 WHERE customer_id = 1;
+ROLLBACK;
+
+SELECT * FROM Shop_Customers;
+
+-- ACID: Atomicity, Consistency, Isolation, Durability.
+-- CAP: In a network partition, a distributed system generally chooses
+-- between Consistency and Availability.
+
+
+4.CREATE DATABASE IF NOT EXISTS college_ddl;
+USE college_ddl;
+
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE Student (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50) NOT NULL,
+    age INT,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+
+CREATE TABLE Course (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50) NOT NULL,
+    credits INT
+);
+
+ALTER TABLE Student ADD email VARCHAR(100);
+ALTER TABLE Student MODIFY student_name VARCHAR(80) NOT NULL;
+ALTER TABLE Course ADD dept_id INT;
+ALTER TABLE Course ADD CONSTRAINT fk_course_dept
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id);
+
+INSERT INTO Department VALUES (1, 'AI and Data Science'), (2, 'CSE');
+INSERT INTO Student (student_id, student_name, age, dept_id, email)
+VALUES (101, 'Sarav', 19, 1, 'sarav@gmail.com');
+INSERT INTO Course VALUES (201, 'DBMS', 4, 1);
+
+SELECT * FROM Department;
+SELECT * FROM Student;
+SELECT * FROM Course;
+
+
+5.CREATE DATABASE IF NOT EXISTS employee_db;
+USE employee_db;
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    department VARCHAR(30),
+    salary DECIMAL(10,2)
+);
+
+INSERT INTO Employee VALUES
+(1, 'Arun', 'IT', 35000),
+(2, 'Priya', 'HR', 30000),
+(3, 'Kumar', 'IT', 40000);
+
+UPDATE Employee
+SET salary = 38000
+WHERE emp_id = 1;
+
+DELETE FROM Employee
+WHERE emp_id = 2;
+
+SELECT * FROM Employee;
+
+
+6.CREATE DATABASE IF NOT EXISTS inventory_db;
+USE inventory_db;
+
+CREATE TABLE Product_Inventory (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50),
+    quantity INT,
+    price DECIMAL(10,2)
+);
+
+INSERT INTO Product_Inventory VALUES
+(1, 'Keyboard', 20, 800),
+(2, 'Mouse', 40, 500),
+(3, 'Monitor', 10, 7500);
+
+DELETE FROM Product_Inventory WHERE product_id = 2;
+SELECT * FROM Product_Inventory;
+
+TRUNCATE TABLE Product_Inventory;
+SELECT * FROM Product_Inventory;
+
+INSERT INTO Product_Inventory VALUES (4, 'Webcam', 15, 1200);
+DROP TABLE Product_Inventory;
+
+
+7.CREATE DATABASE IF NOT EXISTS hospital_db;
+USE hospital_db;
+
+CREATE TABLE Patients (
+    patient_id INT PRIMARY KEY,
+    patient_name VARCHAR(50) NOT NULL,
+    phone VARCHAR(15) UNIQUE,
+    age INT CHECK (age > 0)
+);
+
+CREATE TABLE Doctors (
+    doctor_id INT PRIMARY KEY,
+    doctor_name VARCHAR(50) NOT NULL,
+    specialization VARCHAR(50)
+);
+
+CREATE TABLE Appointments (
+    appointment_id INT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appointment_date DATE NOT NULL,
+    status VARCHAR(20) DEFAULT 'Scheduled',
+    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id),
+    FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id)
+);
+
+INSERT INTO Patients VALUES (1, 'Anu', '9876543210', 25);
+INSERT INTO Doctors VALUES (10, 'Dr Kumar', 'Cardiology');
+INSERT INTO Appointments
+VALUES (100, 1, 10, '2026-10-28', DEFAULT);
+
+SELECT a.appointment_id, p.patient_name, d.doctor_name,
+       a.appointment_date, a.status
+FROM Appointments a
+JOIN Patients p ON a.patient_id = p.patient_id
+JOIN Doctors d ON a.doctor_id = d.doctor_id;
+
+
+8.CREATE DATABASE IF NOT EXISTS customer_db;
+USE customer_db;
+
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    city VARCHAR(40),
+    age INT,
+    total_spent DECIMAL(10,2)
+);
+
+INSERT INTO Customers VALUES
+(1, 'Arun', 'Chennai', 22, 15000),
+(2, 'Priya', 'Coimbatore', 25, 25000),
+(3, 'Kavin', 'Chennai', 30, 8000),
+(4, 'Meena', 'Madurai', 28, 32000),
+(5, 'Ravi', 'Coimbatore', 20, 12000);
+
+SELECT * FROM Customers
+WHERE city = 'Chennai';
+
+SELECT * FROM Customers
+WHERE total_spent >= 15000
+ORDER BY total_spent DESC;
+
+SELECT * FROM Customers
+WHERE age BETWEEN 20 AND 28
+ORDER BY age ASC;
+
+SELECT city, COUNT(*) AS customer_count, SUM(total_spent) AS total_revenue
+FROM Customers
+GROUP BY city
+ORDER BY total_revenue DESC;
+
+
+9.CREATE DATABASE IF NOT EXISTS sales_db;
+USE sales_db;
+
+CREATE TABLE Sales (
+    id INT PRIMARY KEY,
+    month VARCHAR(20),
+    amount INT
+);
+
+INSERT INTO Sales VALUES
+(1, 'Jan', 5000),
+(2, 'Jan', 7000),
+(3, 'Feb', 3000),
+(4, 'Feb', 8000),
+(5, 'Mar', 10000);
+
+SELECT month,
+       SUM(amount) AS Total_Sales,
+       AVG(amount) AS Average_Sales,
+       COUNT(*) AS Total_Orders,
+       CASE
+           WHEN SUM(amount) >= 10000 THEN 'High'
+           ELSE 'Low'
+       END AS Sales_Status
+FROM Sales
+GROUP BY month
+HAVING SUM(amount) >= 5000
+ORDER BY FIELD(month, 'Jan', 'Feb', 'Mar');
+
+
+10.CREATE DATABASE IF NOT EXISTS product_db;
+USE product_db;
+
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(30),
+    category VARCHAR(20),
+    sales INT
+);
+
+INSERT INTO Products VALUES
+(1, 'Laptop', 'Electronics', 50000),
+(2, 'Mobile', 'Electronics', 40000),
+(3, 'Tablet', 'Electronics', 30000),
+(4, 'Shirt', 'Clothing', 20000),
+(5, 'Jeans', 'Clothing', 15000);
+
+SELECT product_name, category, sales,
+       RANK() OVER (ORDER BY sales DESC) AS Sales_Rank,
+       DENSE_RANK() OVER (ORDER BY sales DESC) AS Dense_Rank,
+       ROW_NUMBER() OVER (ORDER BY sales DESC) AS Row_Num
+FROM Products;
+
+
+11.CREATE DATABASE IF NOT EXISTS bank_analysis;
+USE bank_analysis;
+
+CREATE TABLE Bank_Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    city VARCHAR(30)
+);
+
+CREATE TABLE Bank_Accounts (
+    account_id INT PRIMARY KEY,
+    customer_id INT,
+    balance DECIMAL(12,2),
+    FOREIGN KEY (customer_id) REFERENCES Bank_Customers(customer_id)
+);
+
+CREATE TABLE Bank_Transactions (
+    transaction_id INT PRIMARY KEY,
+    account_id INT,
+    amount DECIMAL(12,2),
+    transaction_type VARCHAR(10),
+    FOREIGN KEY (account_id) REFERENCES Bank_Accounts(account_id)
+);
+
+INSERT INTO Bank_Customers VALUES
+(1, 'Arun', 'Chennai'), (2, 'Priya', 'Coimbatore'), (3, 'Kavin', 'Chennai');
+INSERT INTO Bank_Accounts VALUES
+(101, 1, 15000), (102, 2, 25000), (103, 3, 9000);
+INSERT INTO Bank_Transactions VALUES
+(1001, 101, 2000, 'Credit'), (1002, 102, 5000, 'Debit'),
+(1003, 103, 1500, 'Credit');
+
+SELECT c.customer_name, a.account_id, t.amount, t.transaction_type
+FROM Bank_Customers c
+JOIN Bank_Accounts a ON c.customer_id = a.customer_id
+JOIN Bank_Transactions t ON a.account_id = t.account_id;
+
+SELECT customer_name
+FROM Bank_Customers
+WHERE customer_id IN (
+    SELECT customer_id FROM Bank_Accounts WHERE balance > 10000
+);
+
+SELECT a.customer_name AS Customer_1, b.customer_name AS Customer_2,
+       a.city
+FROM Bank_Customers a
+JOIN Bank_Customers b ON a.city = b.city
+WHERE a.customer_id < b.customer_id;
+
+
+12.CREATE DATABASE IF NOT EXISTS view_index_db;
+USE view_index_db;
+
+CREATE TABLE Staff (
+    staff_id INT PRIMARY KEY,
+    staff_name VARCHAR(50),
+    department VARCHAR(30),
+    salary DECIMAL(10,2)
+);
+
+INSERT INTO Staff VALUES
+(1, 'Arun', 'IT', 40000),
+(2, 'Priya', 'HR', 35000),
+(3, 'Kavin', 'IT', 45000),
+(4, 'Meena', 'Sales', 30000);
+
+CREATE VIEW IT_Staff AS
+SELECT staff_id, staff_name, salary
+FROM Staff
+WHERE department = 'IT';
+
+SELECT * FROM IT_Staff;
+
+CREATE INDEX idx_staff_department ON Staff(department);
+EXPLAIN SELECT * FROM Staff WHERE department = 'IT';
+
+DROP VIEW IT_Staff;
+DROP INDEX idx_staff_department ON Staff;
+
+
+13.CREATE DATABASE IF NOT EXISTS payroll_db;
+USE payroll_db;
+
+CREATE TABLE Payroll (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    basic_salary DECIMAL(10,2),
+    bonus DECIMAL(10,2)
+);
+
+INSERT INTO Payroll VALUES
+(1, 'Arun', 30000, 5000),
+(2, 'Priya', 40000, 6000),
+(3, 'Kavin', 35000, 3000);
+
+DELIMITER //
+CREATE PROCEDURE GetPayroll()
+BEGIN
+    SELECT emp_id, emp_name, basic_salary, bonus,
+           basic_salary + bonus AS total_salary
+    FROM Payroll;
+END //
+
+CREATE FUNCTION AnnualSalary(monthly_salary DECIMAL(10,2))
+RETURNS DECIMAL(12,2)
+DETERMINISTIC
+BEGIN
+    RETURN monthly_salary * 12;
+END //
+DELIMITER ;
+
+CALL GetPayroll();
+
+SELECT emp_name, AnnualSalary(basic_salary + bonus) AS annual_salary
+FROM Payroll;
+
+
+14.CREATE DATABASE IF NOT EXISTS bank_transaction_db;
+USE bank_transaction_db;
+
+CREATE TABLE Accounts (
+    account_id INT PRIMARY KEY,
+    account_holder VARCHAR(50),
+    balance DECIMAL(12,2) NOT NULL
+);
+
+INSERT INTO Accounts VALUES (1, 'Arun', 10000), (2, 'Priya', 5000);
+
+DELIMITER //
+CREATE PROCEDURE TransferMoney(
+    IN from_account INT,
+    IN to_account INT,
+    IN transfer_amount DECIMAL(12,2)
+)
+BEGIN
+    DECLARE insufficient_balance INT DEFAULT 0;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT 'Transaction failed; changes rolled back' AS Message;
+    END;
+
+    START TRANSACTION;
+
+    UPDATE Accounts
+    SET balance = balance - transfer_amount
+    WHERE account_id = from_account AND balance >= transfer_amount;
+
+    IF ROW_COUNT() = 0 THEN
+        SET insufficient_balance = 1;
+    END IF;
+
+    IF insufficient_balance = 1 OR transfer_amount <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid transfer or insufficient balance';
+    END IF;
+
+    UPDATE Accounts
+    SET balance = balance + transfer_amount
+    WHERE account_id = to_account;
+
+    IF ROW_COUNT() = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Destination account not found';
+    END IF;
+
+    COMMIT;
+    SELECT 'Transfer successful' AS Message;
+END //
+DELIMITER ;
+
+CALL TransferMoney(1, 2, 1000);
+SELECT * FROM Accounts;
+
+
+15.CREATE DATABASE IF NOT EXISTS elibrary;
+USE elibrary;
+
+CREATE TABLE Members (
+    member_id INT PRIMARY KEY,
+    member_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15)
+);
+
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    author VARCHAR(60),
+    category VARCHAR(40),
+    available_copies INT DEFAULT 0
+);
+
+CREATE TABLE Book_Loans (
+    loan_id INT PRIMARY KEY,
+    member_id INT NOT NULL,
+    book_id INT NOT NULL,
+    issue_date DATE NOT NULL,
+    due_date DATE NOT NULL,
+    return_date DATE,
+    FOREIGN KEY (member_id) REFERENCES Members(member_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+CREATE TABLE Librarians (
+    librarian_id INT PRIMARY KEY,
+    librarian_name VARCHAR(50) NOT NULL
+);
+
+INSERT INTO Members VALUES
+(1, 'Arun', 'arun@gmail.com', '9876543210'),
+(2, 'Priya', 'priya@gmail.com', '9876501234');
+
+INSERT INTO Books VALUES
+(101, 'Database Systems', 'Navathe', 'Computer Science', 3),
+(102, 'Clean Code', 'Robert Martin', 'Programming', 2);
+
+INSERT INTO Librarians VALUES (10, 'Mr Kumar');
+
+INSERT INTO Book_Loans VALUES
+(1001, 1, 101, '2026-10-20', '2026-11-03', NULL),
+(1002, 2, 102, '2026-10-21', '2026-11-04', NULL);
+
+SELECT m.member_name, b.title, bl.issue_date, bl.due_date, bl.return_date
+FROM Book_Loans bl
+JOIN Members m ON bl.member_id = m.member_id
+JOIN Books b ON bl.book_id = b.book_id;
